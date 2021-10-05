@@ -1,0 +1,268 @@
+import React, {useState, useRef, useEffect} from 'react';
+import {
+  StyleSheet,
+  View,
+  Image,
+  Platform,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  ScrollView,
+  TextField,
+} from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import SelectDropdown from 'react-native-select-dropdown';
+import styles from '../style/addRouteStyle';
+import axios from 'axios';
+import {Picker} from '@react-native-picker/picker';
+
+function AddRoute({navigation}) {
+  const [date, setDate] = useState(new Date());
+  const [mode, setMode] = useState('');
+  const [show, setShow] = useState(false);
+  const [textdate, setdate] = useState('Empty');
+  const [texttime, settime] = useState('');
+  const [vandata, setvandata] = useState([]);
+  const [price, setprice] = useState(0);
+  const [route, setroute] = useState([]);
+  const [license, setlicense] = useState([]);
+  const [hours, sethours] = useState(0);
+  const [min, setmin] = useState(0);
+  const licenseDropdownRef = useRef();
+  const [selectedValue, setSelectedValue] = useState();
+  const hours_time = [
+    '05',
+    '06',
+    '07',
+    '08',
+    '09',
+    '10',
+    '11',
+    '12',
+    '13',
+    '14',
+    '15',
+    '16',
+    '17',
+    '18',
+    '19',
+    '20',
+    '21',
+  ];
+  const minute = ['00', '15', '30', '45'];
+  let routs = '';
+  let license_plate = '';
+  let time_format = '';
+  let res = '';
+
+  //call func api one time
+  useEffect(() => {
+    getdata_van();
+  }, []);
+
+  //api
+  async function getdata_van() {
+    await axios
+      .get('http://10.0.2.2:3001/seller/vandata')
+      .then(res => setvandata(res.data));
+  }
+
+  //map data on vandata change
+  useEffect(() => {
+    setroute(vandata);
+  }, [vandata]);
+
+  //set date format and call api
+  function addschedule() {
+    routs = routs.replace(/"/g, '');
+    license_plate = license_plate.replace(/"/g, '');
+    time_format = hours_time[hours] + ':' + minute[min];
+    if (textdate == 'Empty') {
+      alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+    } else {
+      if (price == 0) {
+        alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+      } else {
+        const url =
+          time_format + '/' + textdate + '/' + price + '/' + license_plate;
+        axios
+          .get('http://10.0.2.2:3001/seller/addschedule/' + url)
+          .then(res => call_back(res));
+      }
+    }
+  }
+
+  //wait res for check error
+  function call_back(res) {
+    const res_data = res.data;
+    if (res_data == 0) {
+      alert('สร้างรอบเรียบร้อยแล้ว');
+      navigation.navigate('HomeScreen');
+    } else {
+      alert('Some thing Worng');
+    }
+  }
+
+  //date
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === 'ios');
+    setDate(currentDate);
+    let tempDate = new Date(currentDate);
+    let fDate =
+      tempDate.getDate() +
+      '/' +
+      (tempDate.getMonth() + 1) +
+      '/' +
+      tempDate.getFullYear();
+    setdate(fDate);
+    let fTime = tempDate.getHours() + ' : ' + tempDate.getMinutes();
+    settime(fTime);
+  };
+  const showMode = currentMode => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  return (
+    <ScrollView style={styles.container}>
+      {/* <Header title='เพิ่มรอบรถ' /> */}
+      <View style={styles.dropdownsRow}>
+        <SelectDropdown
+          data={route}
+          onSelect={(selectedItem, index) => {
+            licenseDropdownRef.current.reset();
+            setlicense([]);
+            setlicense(selectedItem.license);
+            //clear data
+          }}
+          defaultButtonText={'เลือกสายรถ'}
+          buttonTextAfterSelection={(selectedItem, index) => {
+            //return data select
+            routs = JSON.stringify(selectedItem.title);
+            console.log('this is routs: ' + routs);
+            return selectedItem.title;
+          }}
+          rowTextForSelection={(item, index) => {
+            //show select data
+            return item.title;
+          }}
+          buttonStyle={styles.dropdown1BtnStyle}
+          buttonTextStyle={styles.dropdown1BtnTxtStyle}
+          renderDropdownIcon={() => {
+            return (
+              <Image
+                style={{width: 15, height: 15}}
+                source={require('../images/down-arrow.png')}
+              />
+            );
+          }}
+          dropdownIconPosition={'right'}
+          rowStyle={styles.dropdown1RowStyle}
+          rowTextStyle={styles.dropdown1RowTxtStyle}
+        />
+      </View>
+
+      <View style={styles.dropdownsRow}>
+        <SelectDropdown
+          ref={licenseDropdownRef}
+          data={license}
+          onSelect={(selectedItem, index) => {}}
+          defaultButtonText={'เลือกรถ'}
+          buttonTextAfterSelection={(selectedItem, index) => {
+            license_plate = JSON.stringify(selectedItem.title);
+            console.log('this is license_plate: ' + license_plate);
+            return selectedItem.title;
+          }}
+          rowTextForSelection={(item, index) => {
+            return item.title;
+          }}
+          buttonStyle={styles.dropdown2BtnStyle}
+          buttonTextStyle={styles.dropdown2BtnTxtStyle}
+          renderDropdownIcon={() => {
+            return (
+              <Image
+                style={{width: 15, height: 15}}
+                source={require('../images/down-arrow.png')}
+              />
+            );
+          }}
+          dropdownIconPosition={'right'}
+          dropdownStyle={styles.dropdown2DropdownStyle}
+          rowStyle={styles.dropdown2RowStyle}
+          rowTextStyle={styles.dropdown2RowTxtStyle}
+        />
+      </View>
+
+      <Text style={styles.baseText}>วันที่</Text>
+      <View style={styles.box}>
+        <Text style={styles.boxInput}>{textdate}</Text>
+        <TouchableOpacity onPress={() => showMode('date')}>
+          <View style={styles.touch_able}>
+            <Text style={{color: 'rgba(86, 96, 179, 1)'}}>เลือกวันที่</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+
+      <Text style={styles.baseText}>เวลา</Text>
+      <View style={{flexDirection: 'row'}}>
+        <View style={{marginLeft: 20}}></View>
+        <Picker
+          style={{
+            height: 50,
+            width: 155,
+            backgroundColor: 'rgba(230, 234, 249, 1)',
+          }}
+          selectedValue={hours}
+          onValueChange={(itemValue, itemIndex) => sethours(itemValue)}>
+          {hours_time.map((item, index) => {
+            return <Picker.Item label={item} value={index} key={index} />;
+          })}
+        </Picker>
+        <Text style={styles.baseText}> : </Text>
+        <Picker
+          style={{
+            height: 50,
+            width: 155,
+            backgroundColor: 'rgba(230, 234, 249, 1)',
+          }}
+          selectedValue={min}
+          onValueChange={(itemValue, itemIndex) => setmin(itemValue)}>
+          {minute.map((item, index) => {
+            return <Picker.Item label={item} value={index} key={index} />;
+          })}
+        </Picker>
+      </View>
+
+      {show && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={date}
+          mode={mode}
+          is24Hour={true}
+          display="default"
+          onChange={onChange}
+        />
+      )}
+
+      <Text style={styles.baseText}>ราคา</Text>
+      <TextInput
+        style={styles.textInput}
+        keyboardType="numeric"
+        placeholder="กรอกราคา"
+        maxLength={4}
+        onChangeText={setprice}
+      />
+
+      <TouchableOpacity onPress={() => addschedule()}>
+        <View style={styles.btnConfirm}>
+          <Text style={{color: 'white', fontWeight: 'bold', fontSize: 20}}>
+            ยืนยัน
+          </Text>
+        </View>
+      </TouchableOpacity>
+    </ScrollView>
+  );
+}
+
+export default AddRoute;
