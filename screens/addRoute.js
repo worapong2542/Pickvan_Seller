@@ -53,7 +53,7 @@ function AddRoute({navigation}) {
   let routs = '';
   let license_plate = '';
   let time_format = '';
-  let res = '';
+
 
   //call func api one time
   useEffect(() => {
@@ -74,8 +74,6 @@ function AddRoute({navigation}) {
 
   //set date format and call api
   function addschedule() {
-    routs = routs.replace(/"/g, '');
-    license_plate = license_plate.replace(/"/g, '');
     time_format = hours_time[hours] + ':' + minute[min];
     if (textdate == 'Empty') {
       alert('กรุณากรอกข้อมูลให้ครบถ้วน');
@@ -139,8 +137,7 @@ function AddRoute({navigation}) {
           defaultButtonText={'เลือกสายรถ'}
           buttonTextAfterSelection={(selectedItem, index) => {
             //return data select
-            routs = JSON.stringify(selectedItem.title);
-            console.log('this is routs: ' + routs);
+            routs =selectedItem.title;
             return selectedItem.title;
           }}
           rowTextForSelection={(item, index) => {
@@ -170,8 +167,7 @@ function AddRoute({navigation}) {
           onSelect={(selectedItem, index) => {}}
           defaultButtonText={'เลือกรถ'}
           buttonTextAfterSelection={(selectedItem, index) => {
-            license_plate = JSON.stringify(selectedItem.title);
-            console.log('this is license_plate: ' + license_plate);
+            license_plate = selectedItem.title;
             return selectedItem.title;
           }}
           rowTextForSelection={(item, index) => {

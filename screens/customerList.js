@@ -27,6 +27,7 @@ function CustomerList({route, navigation}) {
       .get('http://10.0.2.2:3001/seller/ticketdata/' + new_item.id)
       .then(res => setdata(res.data));
   }
+  
   return (
     <View style={{flex: 1, backgroundColor: '#fff'}}>
       <Card>
