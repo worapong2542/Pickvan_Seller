@@ -1,4 +1,5 @@
-import React, {Component} from 'react';
+import React from 'react';
+import {useState, useEffect} from 'react';
 import {
   Text,
   View,
@@ -13,18 +14,16 @@ import axios from 'axios';
 function ConfirmTicket({route, navigation}) {
   const {item} = route.params;
 
-  async function update_stats_ticket(x){
-    const url =  item.item.ticket_id+"/"+x
-    if(x==2){
+  async function update_stats_ticket(x) {
+    const url = item.item.ticket_id + '/' + x;
+    if (x == 2) {
       await axios
-      .get('http://10.0.2.2:3001/seller/update/'+url)
-      .then(res => alert(res.data));
-      navigation.navigate('CheckTicket')
-    }else{
+        .get('http://10.0.2.2:3001/seller/update/' + url)
+        .then(res => alert(res.data));
+    } else {
       await axios
-      .get('http://10.0.2.2:3001/seller/update/'+url)
-      .then(res => alert(res.data));
-      navigation.navigate('CheckTicket')
+        .get('http://10.0.2.2:3001/seller/update/' + url)
+        .then(res => alert(res.data));
     }
   }
 
@@ -34,12 +33,29 @@ function ConfirmTicket({route, navigation}) {
         <ScrollView>
           <View style={{flex: 1, backgroundColor: '#fff'}}>
             <Card>
-              <Text>เลขตั๋ว : {item.item.ticket_id}</Text>
-              <Text>สายการเดินทาง : {item.item.name}</Text>
-              <Text>วันที่ : {item.item.date.substring(0, 10)}</Text>
-              <Text>เวลา : {item.item.time.substring(0, 5)}</Text>
-              <Text>จำนวน : {item.item.seat_amount} ที่นั่ง</Text>
-              <Text>รวมราคา : {item.item.price * item.item.seat_amount} บาท</Text>
+            <View style={{flexDirection: 'row'}}>
+                <Text style={styles.textBold}>เลขตั๋ว  :  {item.item.ticket_id}</Text>
+                <Text style={styles.textDefault}>จำนวน : x {item.item.seat_amount}</Text>              
+              </View>
+              </Card>
+              
+              <Card>
+              <Text style={styles.textBold}>{item.item.name}</Text>   
+              <View style={{flexDirection: 'row'}}>
+              <Text style={styles.textTimeDate}>เวลา : </Text>
+              <Text style={styles.textDefault}>{item.item.time.substring(0, 5)}</Text>
+              </View>
+              <View style={{flexDirection: 'row'}}>
+              <Text style={styles.textTimeDate}>วันที่ : </Text>
+              <Text style={styles.textDefault}>{item.item.date.substring(0, 10)}</Text>
+              </View>
+              </Card>
+
+              <Card>
+              <View style={{flexDirection: 'row'}}>
+              <Text style={styles.textPrice}> รวมการสั่งซื้อ :   </Text>
+              <Text style={styles.textPrice}> {item.item.price * item.item.seat_amount}  บาท  </Text>
+              </View>
             </Card>
           </View>
         </ScrollView>
@@ -54,7 +70,7 @@ function ConfirmTicket({route, navigation}) {
 
         <View style={{marginLeft: 1}}></View>
 
-        <TouchableOpacity onPress={() =>update_stats_ticket(3)}>
+        <TouchableOpacity onPress={() => update_stats_ticket(3)}>
           <View style={styles.btnฺButtom}>
             <Text style={styles.textButtom}>ยกเลิก</Text>
           </View>
@@ -67,8 +83,38 @@ function ConfirmTicket({route, navigation}) {
 export default ConfirmTicket;
 
 const styles = StyleSheet.create({
+  textBold: {
+    color: '#5660B3',
+    fontWeight: 'bold',
+    fontSize: 16,
+    marginTop: 10,
+    marginBottom: 10,
+    marginRight: 150,
+  },
+  textDefault: {
+    color: '#5660B3',
+    marginTop: 10,
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  textTimeDate:{
+    color: '#5660B3',
+    fontWeight: 'bold',
+    fontSize: 16,
+    marginTop: 10,
+    marginBottom: 10,
+    marginRight: 190,
+  },
+  textPrice:{
+    color: '#5660B3',
+    fontWeight: 'bold',
+    fontSize: 16,
+    marginTop: 10,
+    marginBottom: 10,
+    marginRight: 110,
+  },
   btnฺButtom: {
-    backgroundColor: 'rgba(86, 96, 179, 1)',
+    backgroundColor: '#FEB5A6',
     height: 40,
     width: 205,
     justifyContent: 'center',

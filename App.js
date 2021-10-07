@@ -14,6 +14,8 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createStackNavigator} from '@react-navigation/stack';
 import {Icon} from 'react-native-elements';
 import axios from 'axios';
+import CardDate from './components/cardDate';
+
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
@@ -58,24 +60,34 @@ function HomeScreen({navigation}) {
 
   return (
     <View style={{flex: 1, backgroundColor: '#fff'}}>
+      {/* show 3 days */}
       <View style={{flex: 1, justifyContent: 'center'}}>
-        <View style={{flexDirection: 'row'}}>
-          <TouchableOpacity
-            style={{marginLeft: 10}}
-            onPress={() => set_select_date(0)}>
-            <Text>{date_format[0]}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{marginLeft: 10}}
-            onPress={() => set_select_date(1)}>
-            <Text>{date_format[1]}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{marginLeft: 10}}
-            onPress={() => set_select_date(2)}>
-            <Text>{date_format[2]}</Text>
-          </TouchableOpacity>
+        <View style={{flexDirection: 'row', marginRight: 10, marginLeft: 10}}>
+          <CardDate>
+            <TouchableOpacity
+              style={styles.boxDate}
+              onPress={() => set_select_date(0)}>
+              <Text style={styles.textDate}>{date_format[0]}</Text>
+            </TouchableOpacity>
+          </CardDate>
+
+          <CardDate>
+            <TouchableOpacity
+              style={styles.boxDate}
+              onPress={() => set_select_date(1)}>
+              <Text style={styles.textDate}>{date_format[1]}</Text>
+            </TouchableOpacity>
+          </CardDate>
+
+          <CardDate>
+            <TouchableOpacity
+              style={styles.boxDate}
+              onPress={() => set_select_date(2)}>
+              <Text style={styles.textDate}>{date_format[2]}</Text>
+            </TouchableOpacity>
+          </CardDate>
         </View>
+
         <FlatList
           data={reviews}
           renderItem={({item}) => (
@@ -84,9 +96,17 @@ function HomeScreen({navigation}) {
                 navigation.navigate('RouteDetail', {item: {item}})
               }>
               <Card>
-                <Text>เวลา : {item.time.substring(0, 5)}</Text>
-                <Text>{item.destination}</Text>
-                <Text>{item.license}</Text>
+                <Text style={styles.textTime}>{item.time.substring(0, 5)}</Text>
+                <Text style={styles.textDefault}>{item.destination}</Text>
+
+                <View style={{flexDirection: 'row'}}>
+                <Text style={styles.textDefault}>{item.license}</Text>
+                <TouchableOpacity onPress={() => navigation.navigate('RouteDetail', {item: {item}})}>
+                  <View style={styles.btnCheck}>
+                    <Text style={styles.textCheck}>ดูรายละเอียด</Text>
+                  </View>
+                </TouchableOpacity>
+                </View>
               </Card>
             </TouchableOpacity>
           )}
@@ -95,7 +115,7 @@ function HomeScreen({navigation}) {
 
       <View style={{flexDirection: 'row', backgroundColor: 'white'}}>
         <TouchableOpacity onPress={() => navigation.navigate('AddRoute')}>
-          <View style={styles.btnฺButtom}>
+          <View style={styles.btnButtom}>
             <Text style={styles.textButtom}>เพิ่มรอบรถ</Text>
           </View>
         </TouchableOpacity>
@@ -103,7 +123,7 @@ function HomeScreen({navigation}) {
         <View style={{marginLeft: 1}}></View>
 
         <TouchableOpacity onPress={() => navigation.navigate('CheckTicket')}>
-          <View style={styles.btnฺButtom}>
+          <View style={styles.btnButtom}>
             <Text style={styles.textButtom}>ตรวจสอบการจอง</Text>
           </View>
         </TouchableOpacity>
@@ -133,11 +153,21 @@ function route({navigation}) {
         name="HomeScreen"
         component={HomeScreen}
         options={{
-          title: 'PickVan',
+          title: 'รายการเดินรถทั้งหมด',
+          headerTitleAlign: 'center',
+          headerTintColor: '#5660B3',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 25,
+          },
+          headerStyle: {
+            backgroundColor: '#fff',
+            height: 100,
+          },
           headerLeft: () => (
             <TouchableOpacity onPress={() => navigation.openDrawer()}>
               <Image
-                style={{width: 25, height: 25, marginLeft: 15}}
+                style={{width: 35, height: 35, marginLeft: 15, marginRight: 15}}
                 source={require('./images/menu.png')}
               />
             </TouchableOpacity>
@@ -147,12 +177,68 @@ function route({navigation}) {
       <Stack.Screen
         name="RouteDetail"
         component={RouteDetail}
-        options={{title: 'รายละเอียดรอบรถ'}}
+        options={{
+          title: 'รายละเอียดรอบรถ',
+          headerTitleAlign: 'center',
+          headerTintColor: '#5660B3',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 25,
+          },
+        }}
       />
-      <Stack.Screen name="AddRoute" component={AddRoute} />
-      <Stack.Screen name="CheckTicket" component={CheckTicket} />
-      <Stack.Screen name="CustomerList" component={CustomerList} />
-      <Stack.Screen name="ConfirmTicket" component={ConfirmTicket} />
+      <Stack.Screen
+        name="AddRoute"
+        component={AddRoute}
+        options={{
+          title: 'เพิ่มรอบรถ',
+          headerTitleAlign: 'center',
+          headerTintColor: '#5660B3',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 25,
+          },
+        }}
+      />
+      <Stack.Screen
+        name="CheckTicket"
+        component={CheckTicket}
+        options={{
+          title: 'ตรวจสอบการจอง',
+          headerTitleAlign: 'center',
+          headerTintColor: '#5660B3',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 25,
+          },
+        }}
+      />
+      <Stack.Screen
+        name="CustomerList"
+        component={CustomerList}
+        options={{
+          title: 'รายชื่อผู้โดยสาร',
+          headerTitleAlign: 'center',
+          headerTintColor: '#5660B3',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 25,
+          },
+        }}
+      />
+      <Stack.Screen
+        name="ConfirmTicket"
+        component={ConfirmTicket}
+        options={{
+          title: 'ยืนยันการจอง',
+          headerTitleAlign: 'center',
+          headerTintColor: '#5660B3',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 25,
+          },
+        }}
+      />
     </Stack.Navigator>
   );
 }
@@ -160,8 +246,19 @@ function route({navigation}) {
 export default App;
 
 const styles = StyleSheet.create({
-  btnฺButtom: {
-    backgroundColor: 'rgba(86, 96, 179, 1)',
+  textTime: {
+    color: '#5660B3',
+    fontWeight: 'bold',
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  textDefault: {
+    color: '#5660B3',
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  btnButtom: {
+    backgroundColor: '#FEB5A6',
     height: 40,
     width: 205,
     justifyContent: 'center',
@@ -173,7 +270,43 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 18,
   },
-  icon: {
-    paddingLeft: 10,
+  textDate: {
+    color: '#5660B3',
+    fontWeight: 'bold',
+    fontSize: 16,
+    marginLeft: 5,
+  },
+  boxDate: {
+    width: 85,
+  },
+  btnDetail: {
+    backgroundColor: '#FEB5A6',
+    borderRadius: 20,
+    height: 30,
+    width: '60%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft:120,  
+    marginTop:5
+  },
+  textDetail: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  btnCheck: {
+    backgroundColor: '#FEB5A6',
+    borderRadius: 20,
+    height: 30,
+    width: '50%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft:170,  
+    
+  },
+  textCheck: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16,
   },
 });
