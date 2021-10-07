@@ -98,7 +98,9 @@ function HomeScreen({navigation}) {
               <Card>
                 <Text style={styles.textTime}>{item.time.substring(0, 5)}</Text>
                 <Text style={styles.textDefault}>{item.destination}</Text>
-
+                <View style={{flexDirection: 'row'}}>
+                <Text style={styles.textDefault}>ราคา: </Text>
+                <Text style={styles.textDefault}>{item.price}</Text></View>
                 <View style={{flexDirection: 'row'}}>
                 <Text style={styles.textDefault}>{item.license}</Text>
                 <TouchableOpacity onPress={() => navigation.navigate('RouteDetail', {item: {item}})}>

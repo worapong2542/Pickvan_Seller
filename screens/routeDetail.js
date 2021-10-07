@@ -99,9 +99,14 @@ function RouteDetail({route, navigation}) {
       </Card>
 
       <Card>
+      <View style={{flexDirection:'row'}}>
+         <Text style={styles.textSeat}>ราคาต่อที่นั่ง : </Text>
+          <Text style={styles.textDefault}>           {item.item.price}</Text>
+         </View>
+
         <View style={{flexDirection:'row'}}>
           <Text style={styles.textSeat}>จำนวนที่นั่งทั้งหมด : </Text>
-          <Text style={styles.textDefault}>{datavan_and_route.vanseat}</Text>
+          <Text style={styles.textDefault}>  {datavan_and_route.vanseat}</Text>
          </View>
 
          <View style={{flexDirection:'row'}}>
