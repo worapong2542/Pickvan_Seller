@@ -19,10 +19,12 @@ function ConfirmTicket({route, navigation}) {
       await axios
       .get('http://10.0.2.2:3001/seller/update/'+url)
       .then(res => alert(res.data));
+      navigation.navigate('CheckTicket')
     }else{
       await axios
       .get('http://10.0.2.2:3001/seller/update/'+url)
       .then(res => alert(res.data));
+      navigation.navigate('CheckTicket')
     }
   }
 
