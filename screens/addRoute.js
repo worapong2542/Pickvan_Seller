@@ -22,34 +22,19 @@ function AddRoute({navigation}) {
   const [show, setShow] = useState(false);
   const [textdate, setdate] = useState('Empty');
   const [texttime, settime] = useState('');
+  const [hours, sethours] = useState(0);
+  const [min, setmin] = useState(0);
+  const [selectedValue, setSelectedValue] = useState();
   const [vandata, setvandata] = useState([]);
   const [price, setprice] = useState(0);
   const [route, setroute] = useState([]);
   const [license, setlicense] = useState([]);
-  const [hours, sethours] = useState(0);
-  const [min, setmin] = useState(0);
   const licenseDropdownRef = useRef();
-  const [selectedValue, setSelectedValue] = useState();
-  const hours_time = [
-    '05',
-    '06',
-    '07',
-    '08',
-    '09',
-    '10',
-    '11',
-    '12',
-    '13',
-    '14',
-    '15',
-    '16',
-    '17',
-    '18',
-    '19',
-    '20',
-    '21',
-  ];
+ 
+
+  const hours_time = ['05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21',];
   const minute = ['00', '15', '30', '45'];
+
   let routs = '';
   let license_plate = '';
   let time_format = '';
@@ -101,7 +86,7 @@ function AddRoute({navigation}) {
     }
   }
 
-  //date
+  //set วันที่ 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
@@ -114,9 +99,13 @@ function AddRoute({navigation}) {
       '/' +
       tempDate.getFullYear();
     setdate(fDate);
+
+    //set เวลา
     let fTime = tempDate.getHours() + ' : ' + tempDate.getMinutes();
     settime(fTime);
   };
+
+  // function showMode เลือกวันที่
   const showMode = currentMode => {
     setShow(true);
     setMode(currentMode);
@@ -124,7 +113,8 @@ function AddRoute({navigation}) {
 
   return (
     <ScrollView style={styles.container}>
-      {/* <Header title='เพิ่มรอบรถ' /> */}
+    
+    {/* drod down เลือกสายรถ */}
       <View style={styles.dropdownsRow}>
         <SelectDropdown
           data={route}
@@ -160,6 +150,7 @@ function AddRoute({navigation}) {
         />
       </View>
 
+      {/* drod down เลือกรถ */}
       <View style={styles.dropdownsRow}>
         <SelectDropdown
           ref={licenseDropdownRef}
@@ -190,38 +181,34 @@ function AddRoute({navigation}) {
         />
       </View>
 
+      {/* เลือกวันที่ */}
       <Text style={styles.baseText}>วันที่</Text>
       <View style={styles.box}>
         <Text style={styles.boxInput}>{textdate}</Text>
         <TouchableOpacity onPress={() => showMode('date')}>
           <View style={styles.touch_able}>
-            <Text style={{color: 'rgba(86, 96, 179, 1)'}}>เลือกวันที่</Text>
+            <Text style={styles.txtDefault}>เลือกวันที่</Text>
           </View>
         </TouchableOpacity>
       </View>
 
+      {/* เลือกเวลา */}
       <Text style={styles.baseText}>เวลา</Text>
       <View style={{flexDirection: 'row'}}>
         <View style={{marginLeft: 20}}></View>
-        <Picker
-          style={{
-            height: 50,
-            width: 155,
-            backgroundColor: 'rgba(230, 234, 249, 1)',
-          }}
+        <Picker 
+          style={styles.timePicker}
           selectedValue={hours}
           onValueChange={(itemValue, itemIndex) => sethours(itemValue)}>
           {hours_time.map((item, index) => {
             return <Picker.Item label={item} value={index} key={index} />;
           })}
         </Picker>
+
         <Text style={styles.baseText}> : </Text>
+
         <Picker
-          style={{
-            height: 50,
-            width: 155,
-            backgroundColor: 'rgba(230, 234, 249, 1)',
-          }}
+          style={styles.timePicker}
           selectedValue={min}
           onValueChange={(itemValue, itemIndex) => setmin(itemValue)}>
           {minute.map((item, index) => {
@@ -241,6 +228,7 @@ function AddRoute({navigation}) {
         />
       )}
 
+      {/* textInput ราคา */}
       <Text style={styles.baseText}>ราคา</Text>
       <TextInput
         style={styles.textInput}
@@ -250,6 +238,7 @@ function AddRoute({navigation}) {
         onChangeText={setprice}
       />
 
+      {/* ปุ่มยืนยัน */}
       <TouchableOpacity onPress={() => addschedule()}>
         <View style={styles.btnConfirm}>
           <Text style={{color: 'white', fontWeight: 'bold', fontSize: 20}}>
@@ -262,3 +251,5 @@ function AddRoute({navigation}) {
 }
 
 export default AddRoute;
+
+// gti testttt

@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 
-export default function Card(props){
+export default function CardDate(props){
     return(
         <View style={styles.card}>
             <View style={styles.cardContent}>
@@ -17,8 +17,6 @@ const styles = StyleSheet.create({
         backgroundColor:'#E8F3F3',
         marginHorizontal:4,
         marginVertical:6,
-        marginLeft:15,
-        marginRight:15
         
     },
     cardContent:{

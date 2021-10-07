@@ -92,21 +92,21 @@ function RouteDetail({route, navigation}) {
   return (
     <View style={{flex: 1, backgroundColor: '#fff'}}>
       <Card>
-        <Text style={styles.txtDefault}>
-          เวลา : {item.item.time.substring(0, 5)}
+        <Text style={styles.textTime}>{item.item.time.substring(0, 5)}
         </Text>
-        <Text style={styles.txtDefault}>{item.item.destination}</Text>
-        <Text style={styles.txtDefault}>{item.item.license}</Text>
+        <Text style={styles.textDefault}>{item.item.destination}</Text>
+        <Text style={styles.textDefault}>{item.item.license}</Text>
       </Card>
 
       <Card>
-        <View>
-          <Text style={styles.txtDefault}>
-            จำนวนที่นั่งทั้งหมด : {datavan_and_route.vanseat}
-          </Text>
-          <Text style={styles.txtDefault}>
-            จำนวนที่นั่งที่เหลือ :{datavan_and_route.set_free}
-          </Text>
+        <View style={{flexDirection:'row'}}>
+          <Text style={styles.textSeat}>จำนวนที่นั่งทั้งหมด : </Text>
+          <Text style={styles.textDefault}>{datavan_and_route.vanseat}</Text>
+         </View>
+
+         <View style={{flexDirection:'row'}}>
+          <Text style={styles.textSeat}>จำนวนที่นั่งที่เหลือ :    </Text>
+          <Text style={styles.textDefault}>{datavan_and_route.set_free}</Text>
         </View>
 
         <TouchableOpacity
@@ -118,20 +118,23 @@ function RouteDetail({route, navigation}) {
       <Card>
         <View>
           <Text style={styles.txtHead}>เพิ่มที่นั่ง walk in </Text>
-          <View style={{flexDirection: 'row'}}>
-            <Text>จำนวนที่นั่ง</Text>
+         
+            <View style={{flexDirection: 'row',alignContent:'center',alignItems:'center',alignSelf:'center',backgroundColor: 'white'}} >
             <TouchableOpacity
-              style={{backgroundColor: '#DDDDDD'}}
+              style={styles.blockAddSeatPlus}
               onPress={() => setseat(seat + 1)}>
-              <Text>++++++</Text>
+              <Text style={styles.baseText}> + </Text>
             </TouchableOpacity>
-            <Text>{seat}</Text>
+
+            <Text style={styles.baseText}>{seat}</Text>
+
             <TouchableOpacity
-              style={{backgroundColor: '#DDDDDD'}}
+               style={styles.blockAddSeatMinus}
               onPress={() => setseat(seat - 1)}>
-              <Text>--------</Text>
+              <Text style={styles.baseText} > - </Text>
             </TouchableOpacity>
-          </View>
+            </View>
+
         </View>
 
         <View style={styles.container}>
@@ -162,16 +165,31 @@ function RouteDetail({route, navigation}) {
 export default RouteDetail;
 
 const styles = StyleSheet.create({
-  txtDefault: {
+  textTime: {
+    color: '#5660B3',
+    fontWeight: 'bold',
     fontSize: 16,
-    marginTop: 10,
+    marginBottom: 10,
+  },
+  textDefault: {
+    color: '#5660B3',
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  textSeat:{
+    color: '#5660B3',
+    // fontWeight: 'bold',
+    fontSize: 16,
+    marginBottom: 10,
+    marginRight: 170
   },
   txtHead: {
     alignSelf: 'center',
     fontWeight: 'bold',
     fontSize: 17,
+    color: '#5660B3',
+    marginBottom: 10,
     marginTop: 30,
-    marginBottom: 20,
   },
   container: {
     marginTop: 30,
@@ -181,7 +199,7 @@ const styles = StyleSheet.create({
   btnConfirm: {
     marginTop: 4,
     margin: 20,
-    backgroundColor: 'rgba(86, 96, 179, 1)',
+    backgroundColor: '#FEB5A6',
     borderRadius: 20,
     height: 40,
     width: '80%',
@@ -191,6 +209,16 @@ const styles = StyleSheet.create({
   },
   picker: {
     height: 50,
-    width: 370,
+    width: 350,
   },
+  baseText: {
+    fontWeight: 'bold',
+    color: 'rgba(86, 96, 179, 1)',
+    fontSize: 18,
+    marginLeft: 50,
+    marginRight:50,
+    marginTop:15,
+    marginBottom:15
+  },
+
 });
