@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   btnConfirm: {
-    marginTop: 4,
+    marginTop: -10,
     margin: 20,
     backgroundColor: '#FEB5A6',
     borderRadius: 20,

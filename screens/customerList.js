@@ -15,6 +15,7 @@ import axios from 'axios';
 function CustomerList({route, navigation}) {
   const [data, setdata] = useState('');
   const {item} = route.params;
+  console.log(item)
   const new_item = item.item.item;
   const [reviews, setReviews] = useState([]);
 

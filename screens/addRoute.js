@@ -30,15 +30,31 @@ function AddRoute({navigation}) {
   const [route, setroute] = useState([]);
   const [license, setlicense] = useState([]);
   const licenseDropdownRef = useRef();
- 
 
-  const hours_time = ['05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21',];
+  const hours_time = [
+    '05',
+    '06',
+    '07',
+    '08',
+    '09',
+    '10',
+    '11',
+    '12',
+    '13',
+    '14',
+    '15',
+    '16',
+    '17',
+    '18',
+    '19',
+    '20',
+    '21',
+  ];
   const minute = ['00', '15', '30', '45'];
 
   let routs = '';
   let license_plate = '';
   let time_format = '';
-
 
   //call func api one time
   useEffect(() => {
@@ -60,18 +76,14 @@ function AddRoute({navigation}) {
   //set date format and call api
   function addschedule() {
     time_format = hours_time[hours] + ':' + minute[min];
-    if (textdate == 'Empty') {
+    if (textdate == 'Empty' || price == 0||license_plate=='') {
       alert('กรุณากรอกข้อมูลให้ครบถ้วน');
     } else {
-      if (price == 0) {
-        alert('กรุณากรอกข้อมูลให้ครบถ้วน');
-      } else {
-        const url =
-          time_format + '/' + textdate + '/' + price + '/' + license_plate;
-        axios
-          .get('http://10.0.2.2:3001/seller/addschedule/' + url)
-          .then(res => call_back(res));
-      }
+      const url =
+        time_format + '/' + textdate + '/' + price + '/' + license_plate;
+      axios
+        .get('http://10.0.2.2:3001/seller/addschedule/' + url)
+        .then(res => call_back(res));
     }
   }
 
@@ -86,7 +98,7 @@ function AddRoute({navigation}) {
     }
   }
 
-  //set วันที่ 
+  //set วันที่
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
@@ -113,8 +125,7 @@ function AddRoute({navigation}) {
 
   return (
     <ScrollView style={styles.container}>
-    
-    {/* drod down เลือกสายรถ */}
+      {/* drod down เลือกสายรถ */}
       <View style={styles.dropdownsRow}>
         <SelectDropdown
           data={route}
@@ -127,7 +138,7 @@ function AddRoute({navigation}) {
           defaultButtonText={'เลือกสายรถ'}
           buttonTextAfterSelection={(selectedItem, index) => {
             //return data select
-            routs =selectedItem.title;
+            routs = selectedItem.title;
             return selectedItem.title;
           }}
           rowTextForSelection={(item, index) => {
@@ -196,7 +207,7 @@ function AddRoute({navigation}) {
       <Text style={styles.baseText}>เวลา</Text>
       <View style={{flexDirection: 'row'}}>
         <View style={{marginLeft: 20}}></View>
-        <Picker 
+        <Picker
           style={styles.timePicker}
           selectedValue={hours}
           onValueChange={(itemValue, itemIndex) => sethours(itemValue)}>
@@ -252,4 +263,3 @@ function AddRoute({navigation}) {
 
 export default AddRoute;
 
-// gti testttt

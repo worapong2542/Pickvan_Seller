@@ -276,10 +276,10 @@ const styles = StyleSheet.create({
     color: '#5660B3',
     fontWeight: 'bold',
     fontSize: 16,
-    marginLeft: 5,
+    textAlign:'center'
   },
   boxDate: {
-    width: 85,
+    width: 91,
   },
   btnDetail: {
     backgroundColor: '#FEB5A6',
@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
     width: '60%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft:120,  
+    marginLeft:120,
     marginTop:5
   },
   textDetail: {
@@ -303,8 +303,8 @@ const styles = StyleSheet.create({
     width: '50%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft:170,  
-    
+    marginLeft:170,
+
   },
   textCheck: {
     color: 'white',
