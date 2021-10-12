@@ -15,9 +15,11 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {Icon} from 'react-native-elements';
 import axios from 'axios';
 import CardDate from './components/cardDate';
-
+import { DrawerContent } from './screens/DrawerContent';
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
+import Login from './screens/login';
+import Register from './screens/register';
 
 function HomeScreen({navigation}) {
   const [dataschedule, setdataschedule] = useState([]);
@@ -99,15 +101,19 @@ function HomeScreen({navigation}) {
                 <Text style={styles.textTime}>{item.time.substring(0, 5)}</Text>
                 <Text style={styles.textDefault}>{item.destination}</Text>
                 <View style={{flexDirection: 'row'}}>
-                <Text style={styles.textDefault}>ราคา: </Text>
-                <Text style={styles.textDefault}>{item.price}</Text></View>
+                  <Text style={styles.textDefault}>ราคา: </Text>
+                  <Text style={styles.textDefault}>{item.price}</Text>
+                </View>
                 <View style={{flexDirection: 'row'}}>
-                <Text style={styles.textDefault}>{item.license}</Text>
-                <TouchableOpacity onPress={() => navigation.navigate('RouteDetail', {item: {item}})}>
-                  <View style={styles.btnCheck}>
-                    <Text style={styles.textCheck}>ดูรายละเอียด</Text>
-                  </View>
-                </TouchableOpacity>
+                  <Text style={styles.textDefault}>{item.license}</Text>
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate('RouteDetail', {item: {item}})
+                    }>
+                    <View style={styles.btnCheck}>
+                      <Text style={styles.textCheck}>ดูรายละเอียด</Text>
+                    </View>
+                  </TouchableOpacity>
                 </View>
               </Card>
             </TouchableOpacity>
@@ -138,6 +144,7 @@ function App() {
   return (
     <NavigationContainer>
       <Drawer.Navigator
+        drawerContent={props => <DrawerContent {...props} />}
         initialRouteName="HomeScreen"
         screenOptions={{
           headerShown: false,
@@ -151,6 +158,8 @@ function App() {
 function route({navigation}) {
   return (
     <Stack.Navigator>
+      <Stack.Screen name="Login" component={Login}></Stack.Screen>
+      <Stack.Screen name="Register" component={Register}></Stack.Screen>
       <Stack.Screen
         name="HomeScreen"
         component={HomeScreen}
@@ -276,7 +285,7 @@ const styles = StyleSheet.create({
     color: '#5660B3',
     fontWeight: 'bold',
     fontSize: 16,
-    textAlign:'center'
+    textAlign: 'center',
   },
   boxDate: {
     width: 91,
@@ -288,8 +297,8 @@ const styles = StyleSheet.create({
     width: '60%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft:120,
-    marginTop:5
+    marginLeft: 120,
+    marginTop: 5,
   },
   textDetail: {
     color: 'white',
@@ -303,8 +312,7 @@ const styles = StyleSheet.create({
     width: '50%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft:170,
-
+    marginLeft: 170,
   },
   textCheck: {
     color: 'white',
