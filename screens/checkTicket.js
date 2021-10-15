@@ -12,6 +12,7 @@ function CheckTicket({navigation}) {
   useEffect(() => {
     checkticket();
   }, []);
+  
   //loop req api every 5 second
   const [seconds, setSeconds] = useState(0);
   useEffect(() => {

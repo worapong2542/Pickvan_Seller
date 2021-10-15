@@ -1,78 +1,155 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
   View,
-  Image,
   TextInput,
-  Button,
   TouchableOpacity,
-  StatusBar,
-  Alert,
-  AsyncStorage,
+  ImageBackground
 } from 'react-native';
-import {Link, withRouter} from 'react-router-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import Register from './register';
 
 function Login({navigation}) {
-  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [result, setResult] = useState(2);
+
+  function checkLogin() {
+    if (email == '' || password == '') {
+      alert('กรุณากรอกข้อมูลให้ครบ');
+    } else {
+      login_sentApi();
+    }
+  }
+
+  //ส่งข้อมูลไป
+  async function login_sentApi() {
+    await axios
+      .post('http://10.0.2.2:3001/user/login_seller', {
+        email: email,
+        password: password,
+      })
+      .then(res => setResult(res.data));
+    console.log(result);
+    if (result.status == 0) {
+      alert('กรุณากรอกข้อมูลให้ถูกต้อง');
+    } else if (result==2){
+
+    } 
+    else { 
+      await AsyncStorage.setItem('@datalogin', email); //เก็บเช้า local storage
+      await AsyncStorage.setItem('@dataloginId', result.seller_id);
+      await AsyncStorage.setItem('@dataloginName', result.name);
+      navigation.navigate('HomeScreen');
+    }
+  }
+
   return (
-    <View>
-      <Text>aaa</Text>
-      <Button
-        title="Go Home"
-        onPress={() => navigation.navigate('HomeScreen')}
-      />
-      <Button
-        title="Go Register"
-        onPress={() => navigation.navigate('Register')}
-      />
-    </View>
+    <ImageBackground
+      source={require('../images/loginBg.png')}
+      style={{width: '100%', height: '100%'}}>
+
+        <View style={styles.title}>
+        <Text style={styles.Texttitle}> PickVan</Text>
+        </View>
+        
+
+      <View style={styles.container}>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.TextInput}
+            placeholder="กรอกอีเมล์"
+            placeholderTextColor="#8C8C8C"
+            onChangeText={email => setEmail(email)}
+          />
+        </View>
+
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.TextInput}
+            placeholder="กรอกรหัสผ่าน"
+            placeholderTextColor="#8C8C8C"
+            secureTextEntry={true}
+            onChangeText={password => setPassword(password)}
+          />
+        </View>
+
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity onPress={() => checkLogin()} style={styles.button}>
+            <Text style={styles.buttonText}> ลงชื่อเข้าใช้</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Register')}
+            style={styles.buttonRegister}>
+            <Text style={styles.buttonRegisterText}> ยังไม่มีบัญชีผู้ใช้? </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  title:{
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center', 
+  },
+  Texttitle:{
+    marginTop:170,
+    fontSize: 45,
+    fontWeight:'bold',
+    color:'white'
+  },
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
+    flex: 2,
     justifyContent: 'center',
-  },
-
-  image: {
-    marginBottom: 40,
-  },
-
-  inputView: {
-    backgroundColor: '#FFC0CB',
-    borderRadius: 30,
-    width: '70%',
-    height: 45,
-    marginBottom: 20,
     alignItems: 'center',
+   
   },
-
-  TextInput: {
-    height: 50,
-    flex: 1,
-    padding: 10,
-    marginLeft: 20,
-  },
-
-  forgot_button: {
-    height: 30,
-    marginBottom: 30,
-  },
-
-  loginBtn: {
+  inputContainer: {
     width: '80%',
-    borderRadius: 25,
-    height: 50,
-    alignItems: 'center',
+    backgroundColor: 'white',
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderRadius: 30,
+    marginTop: 5,
+  },
+
+  buttonContainer: {
+    width: '60%',
     justifyContent: 'center',
+    alignItems: 'center',
     marginTop: 40,
-    backgroundColor: '#FF1493',
+  },
+  button: {
+    backgroundColor: '#FEB5A6',
+    width: '100%',
+    padding: 15,
+    borderRadius: 30,
+    alignItems: 'center',
+  },
+  buttonRegister: {
+    marginTop: 5,
+    borderColor: 'white',
+    borderWidth: 2,
+    width: '100%',
+    padding: 15,
+    borderRadius: 30,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: '700',
+    fontSize: 16,
+  },
+  buttonRegisterText: {
+    color: 'white',
+    fontWeight: '700',
+    fontSize: 16,
   },
 });
 

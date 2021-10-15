@@ -15,18 +15,39 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {Icon} from 'react-native-elements';
 import axios from 'axios';
 import CardDate from './components/cardDate';
-import { DrawerContent } from './screens/DrawerContent';
-const Drawer = createDrawerNavigator();
-const Stack = createStackNavigator();
+import {DrawerContent} from './screens/DrawerContent';
 import Login from './screens/login';
 import Register from './screens/register';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
 
 function HomeScreen({navigation}) {
   const [dataschedule, setdataschedule] = useState([]);
   const [select_date, set_select_date] = useState(0);
   const date_format = [];
+  
   //set data from api in reviews
   const [reviews, setReviews] = useState([]);
+
+  //เข้ามาแล้วทำ check ก่อน
+  useEffect(() => {
+    checkAsyncStorage();
+  }, []);
+
+  async function checkAsyncStorage() {
+    console.log('AsyncFunc');
+    try {
+      const email = await AsyncStorage.getItem('@datalogin');
+      if (email === undefined || email === '' || email === null) {
+        navigation.navigate('Login');
+      } else {
+        
+      }
+    } catch (err) {}
+  }
+
 
   //auto start set date
   date();
@@ -157,9 +178,26 @@ function App() {
 
 function route({navigation}) {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Login" component={Login}></Stack.Screen>
-      <Stack.Screen name="Register" component={Register}></Stack.Screen>
+    <Stack.Navigator  initialRouteName="HomeScreen">
+
+      
+      <Stack.Screen name="Login" component={Login} options={{headerShown: false}}></Stack.Screen>
+
+      
+      <Stack.Screen name="Register" component={Register}options={{
+          title: 'ลงทะเบียน',
+          headerTitleAlign: 'center',
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 25,
+          },
+          headerStyle: {
+            backgroundColor: '#B0D8D8',
+            height: 80,
+          },}} ></Stack.Screen>
+
+
       <Stack.Screen
         name="HomeScreen"
         component={HomeScreen}
@@ -185,6 +223,8 @@ function route({navigation}) {
           ),
         }}
       />
+      
+
       <Stack.Screen
         name="RouteDetail"
         component={RouteDetail}
@@ -198,6 +238,8 @@ function route({navigation}) {
           },
         }}
       />
+
+
       <Stack.Screen
         name="AddRoute"
         component={AddRoute}
@@ -211,6 +253,8 @@ function route({navigation}) {
           },
         }}
       />
+
+
       <Stack.Screen
         name="CheckTicket"
         component={CheckTicket}
@@ -224,6 +268,8 @@ function route({navigation}) {
           },
         }}
       />
+
+
       <Stack.Screen
         name="CustomerList"
         component={CustomerList}
@@ -237,6 +283,8 @@ function route({navigation}) {
           },
         }}
       />
+
+
       <Stack.Screen
         name="ConfirmTicket"
         component={ConfirmTicket}
