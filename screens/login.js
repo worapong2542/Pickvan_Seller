@@ -24,21 +24,20 @@ function Login({navigation}) {
     }
   }
 
-  //ส่งข้อมูลไป
   async function login_sentApi() {
     await axios
       .post('http://10.0.2.2:3001/user/login_seller', {
         email: email,
         password: password,
       })
-      .then(res => setResult(res.data));
+      .then(res => setResult(res.data)); 
     console.log(result);
-    if (result.status == 0) {
+    if (result.status == 0) { //emai,pass ไม่ตรง
       alert('กรุณากรอกข้อมูลให้ถูกต้อง');
     } else if (result==2){
 
     } 
-    else { 
+    else { //email pass ตรง 
       await AsyncStorage.setItem('@datalogin', email); //เก็บเช้า local storage
       await AsyncStorage.setItem('@dataloginId', result.seller_id);
       await AsyncStorage.setItem('@dataloginName', result.name);
@@ -62,7 +61,7 @@ function Login({navigation}) {
             style={styles.TextInput}
             placeholder="กรอกอีเมล์"
             placeholderTextColor="#8C8C8C"
-            onChangeText={email => setEmail(email)}
+            onChangeText={email => setEmail(email)} //รับ email แล้วส่งไป setEmail
           />
         </View>
 

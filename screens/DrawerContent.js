@@ -9,6 +9,7 @@ import {useState, useEffect} from 'react';
 import {log} from 'react-native-reanimated';
 
 export function DrawerContent({props, navigation}) {
+  
   async function del() {
     await AsyncStorage.removeItem('@datalogin');
     await AsyncStorage.removeItem('@dataloginId');
@@ -17,10 +18,11 @@ export function DrawerContent({props, navigation}) {
   }
 
   const [userName, setuserName] = useState('')
-  
+
+  //ทำงานเมื่อหน้าถูกเรียกใช้
   useEffect(() => {
     getUserName();
-  }, []);
+  }, []); //[] ทำงานรอบเดียว
 
   async function getUserName() { 
     const tempName = await AsyncStorage.getItem('@dataloginName');

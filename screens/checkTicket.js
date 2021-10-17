@@ -22,6 +22,7 @@ function CheckTicket({navigation}) {
     }, 5000);
     return () => clearInterval(interval);
   }, []);
+
   async function checkticket() {
     await axios
       .get('http://10.0.2.2:3001/seller/checkticket/')
@@ -32,7 +33,7 @@ function CheckTicket({navigation}) {
   useEffect(() => {
     setReviews(data);
   }, [data]);
-
+ 
   return (
     <View style={{flex: 1, backgroundColor: '#fff'}}>
       <View style={{flex: 1, justifyContent: 'center'}}>

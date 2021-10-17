@@ -31,13 +31,13 @@ function HomeScreen({navigation}) {
   //set data from api in reviews
   const [reviews, setReviews] = useState([]);
 
-  //เข้ามาแล้วทำ check ก่อน
+  //เข้ามาแล้ว check ว่า login ยัง ถ้ายังให้ login ก่อน
   useEffect(() => {
     checkAsyncStorage();
   }, []);
 
   async function checkAsyncStorage() {
-    console.log('AsyncFunc');
+    // console.log('AsyncFunc');
     try {
       const email = await AsyncStorage.getItem('@datalogin');
       if (email === undefined || email === '' || email === null) {

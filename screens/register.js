@@ -5,7 +5,7 @@ import {
   View,
   TextInput,
   TouchableOpacity,
-  ImageBackground
+  ImageBackground,
 } from 'react-native';
 import {Link, withRouter} from 'react-router-native';
 import axios from 'axios';
@@ -37,7 +37,6 @@ function Register({navigation}) {
     }
   }
 
-  //ส่งข้อมูลไป
   async function register_sentApi() {
     await axios
       .post('http://10.0.2.2:3001/user/regist_customer', {
@@ -59,92 +58,100 @@ function Register({navigation}) {
 
   return (
     <ImageBackground
-    source={require('../images/registBg.png')}
-    style={{width: '100%', height: '100%'}}>
+      source={require('../images/registBg.png')}
+      style={{width: '100%', height: '100%'}}>
 
-    <View style={styles.container}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="ชื่อผู้ใช้"
-          placeholderTextColor="#8C8C8C"
-          onChangeText={userName_input => setuserName(userName_input)}
-        />
-      </View>
-
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="อีเมลล์"
-          placeholderTextColor="#8C8C8C"
-          secureTextEntry={true}
-          onChangeText={email_input => setEmail(email_input)}
-        />
-      </View>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="รหัสผ่าน"
-          placeholderTextColor="#8C8C8C"
-          secureTextEntry={true}
-          onChangeText={password_input => setPassword(password_input)}
-        />
-      </View>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="ยืนยันรหัสผ่าน"
-          placeholderTextColor="#8C8C8C"
-          secureTextEntry={true}
-          onChangeText={confirm_password_input =>
-            setconfirm_password(confirm_password_input)
-          }
-        />
+      <Text style={styles.Textlabel}>ชื่อผู้ใช้ </Text>
+      <View style={styles.container}>
+        <View style={styles.inputContainer}>
+          <TextInput
+            onChangeText={userName_input => setuserName(userName_input)}
+          />
+        </View>
       </View>
 
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="เบอร์โทรศัพท์"
-          placeholderTextColor="#8C8C8C"
-          secureTextEntry={true}
-          onChangeText={phoneNum_input => setphoneNum(phoneNum_input)}
-          keyboardType="numeric"
-        />
+      <Text style={styles.Textlabel}>อีเมลล์</Text>
+      <View style={styles.container}>
+        <View style={styles.inputContainer}>
+          <TextInput
+            secureTextEntry={true}
+            onChangeText={email_input => setEmail(email_input)}
+          />
+        </View>
       </View>
 
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={() => checkRegister()} style={styles.button}>
-          <Text style={styles.buttonText}> ลงทะเบียน </Text>
-        </TouchableOpacity>
+      <Text style={styles.Textlabel}>รหัสผ่าน</Text>
+      <View style={styles.container}>
+        <View style={styles.inputContainer}>
+          <TextInput
+            secureTextEntry={true}
+            onChangeText={password_input => setPassword(password_input)}
+          />
+        </View>
       </View>
-    </View>
+
+      <Text style={styles.Textlabel}>ยืนยันรหัสผ่าน</Text>
+      <View style={styles.container}>
+        <View style={styles.inputContainer}>
+          <TextInput
+            secureTextEntry={true}
+            onChangeText={confirm_password_input =>
+              setconfirm_password(confirm_password_input)
+            }
+          />
+        </View>
+      </View>
+
+      <Text style={styles.Textlabel}>เบอร์โทรศัพท์</Text>
+      <View style={styles.container}>
+        <View style={styles.inputContainer}>
+          <TextInput
+            secureTextEntry={true}
+            onChangeText={phoneNum_input => setphoneNum(phoneNum_input)}
+            keyboardType="numeric"
+          />
+        </View>
+      </View>
+
+      <View style={styles.container}>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            onPress={() => checkRegister()}
+            style={styles.button}>
+            <Text style={styles.buttonText}> ลงทะเบียน </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: 'center',
-    marginTop:35
+  },
+  Textlabel: {
+    fontSize: 17,
+    fontWeight: 'bold',
+    color: 'white',
+    marginLeft: 30,
   },
   inputContainer: {
     backgroundColor: 'white',
     width: '85%',
-    height: 60,
+    height: 55,
     paddingHorizontal: 15,
     paddingVertical: 10,
-    marginTop: 13,
-    borderRadius:30
+    marginTop: 2,
+    marginBottom: 10,
+    borderRadius: 25,
   },
-  TextInput: {},
 
   buttonContainer: {
     width: '60%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 40,
+    marginTop: 20,
   },
   button: {
     backgroundColor: '#FEB5A6',
