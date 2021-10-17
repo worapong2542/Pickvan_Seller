@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   ImageBackground,
+  KeyboardAvoidingView
 } from 'react-native';
 import {Link, withRouter} from 'react-router-native';
 import axios from 'axios';
@@ -60,7 +61,8 @@ function Register({navigation}) {
     <ImageBackground
       source={require('../images/registBg.png')}
       style={{width: '100%', height: '100%'}}>
-
+        
+      <KeyboardAvoidingView style={styles.kbView}>
       <Text style={styles.Textlabel}>ชื่อผู้ใช้ </Text>
       <View style={styles.container}>
         <View style={styles.inputContainer}>
@@ -74,7 +76,6 @@ function Register({navigation}) {
       <View style={styles.container}>
         <View style={styles.inputContainer}>
           <TextInput
-            secureTextEntry={true}
             onChangeText={email_input => setEmail(email_input)}
           />
         </View>
@@ -122,11 +123,15 @@ function Register({navigation}) {
           </TouchableOpacity>
         </View>
       </View>
+      </KeyboardAvoidingView>
     </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  kbView:{
+    flex: 1
+  },
   container: {
     alignItems: 'center',
   },
