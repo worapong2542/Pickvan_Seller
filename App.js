@@ -42,9 +42,7 @@ function HomeScreen({navigation}) {
       const email = await AsyncStorage.getItem('@datalogin');
       if (email === undefined || email === '' || email === null) {
         navigation.navigate('Login');
-      } else {
-        
-      }
+      } 
     } catch (err) {}
   }
 

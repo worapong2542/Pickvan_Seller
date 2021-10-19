@@ -5831,6 +5831,11 @@ react-native-select-dropdown@^1.1.0:
   resolved "https://registry.yarnpkg.com/react-native-select-dropdown/-/react-native-select-dropdown-1.1.0.tgz#e640a02738c8569c4a1df57ea5a2f1607982000b"
   integrity sha512-76XFBc/axByFw8ilgaC6iA4bBYKdxPFZifiQfhrFnwJmwFXE+9XhrlvMMww5seXukrEMOp0JkLasgINSEr6kwQ==
 
+react-native-sha256@^1.4.7:
+  version "1.4.7"
+  resolved "https://registry.yarnpkg.com/react-native-sha256/-/react-native-sha256-1.4.7.tgz#cef05260a3a3a17cd70727170d0c187ef7cefb8c"
+  integrity sha512-VcIjOBGvHG6V2OCgbGnEKOymcatYC7byf1aM6mmCoUDqOUFQrGIjnU9fUMWGoMERAljVqisvsG/M1GdfhilkFg==
+
 react-native-size-matters@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/react-native-size-matters/-/react-native-size-matters-0.3.1.tgz#24d0cfc335a2c730f6d58bd7b43ea5a41be4b49f"

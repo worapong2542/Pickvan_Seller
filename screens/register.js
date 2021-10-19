@@ -11,6 +11,7 @@ import {
 import {Link, withRouter} from 'react-router-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { sha256 } from 'react-native-sha256';
 
 function Register({navigation}) {
   const [userName, setuserName] = useState('');
@@ -18,7 +19,8 @@ function Register({navigation}) {
   const [password, setPassword] = useState('');
   const [confirm_password, setconfirm_password] = useState('');
   const [phoneNum, setphoneNum] = useState('');
-  const [result, setResult] = useState();
+  const [result, setResult] = useState([{status:2}]);
+  const [hash_pass,sethash_pass] = useState();
 
   function checkRegister() {
     if (
@@ -39,23 +41,35 @@ function Register({navigation}) {
   }
 
   async function register_sentApi() {
+
+    await sha256(password).then( hash => {
+      sethash_pass(hash.toString())
+      console.log(hash_pass);
+  })
+
     await axios
       .post('http://10.0.2.2:3001/user/regist_customer', {
         userName: userName, //key : value
         email: email,
-        password: password,
+        password: hash_pass,
         phoneNum: phoneNum,
       })
-      .then(res => setResult(res.data));
-    console.log(result);
+      .then(res => setitem(res));
+    
+   }
+
+   async function setitem(res){
+    setResult(res.data)
     if (result.status == 0) {
       alert('อีเมล์นี้ถูกใช้งานแล้ว');
-    } else {
+    } else if(result.status == 2){
+    }
+      else {
       await AsyncStorage.setItem('@datalogin', email); //เก็บเช้า local storage
       await AsyncStorage.setItem('@dataloginId', result.id.toString());
       navigation.navigate('HomeScreen');
     }
-  }
+   }
 
   return (
     <ImageBackground

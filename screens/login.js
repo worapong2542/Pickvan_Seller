@@ -35,7 +35,7 @@ function Login({navigation}) {
     if (result.status == 0) { //emai,pass ไม่ตรง
       alert('กรุณากรอกข้อมูลให้ถูกต้อง');
     } else if (result==2){ } 
-    else { //email pass ตรง 
+    else { 
       await AsyncStorage.setItem('@datalogin', email); //เก็บเช้า local storage
       await AsyncStorage.setItem('@dataloginId', result.seller_id);
       await AsyncStorage.setItem('@dataloginName', result.name);
