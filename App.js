@@ -20,6 +20,11 @@ import Login from './screens/login';
 import Register from './screens/register';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import Auto_schedule from './screens/auto_schedule';
+import Auto_schedule_add from './screens/Auto_schedule_add';
+import Auto_schedule_edit from './screens/auto_schedule_edit';
+import Auto_schedule_detail from './screens/auto_schedule_detail';
+
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
@@ -27,7 +32,7 @@ function HomeScreen({navigation}) {
   const [dataschedule, setdataschedule] = useState([]);
   const [select_date, set_select_date] = useState(0);
   const date_format = [];
-  
+
   //set data from api in reviews
   const [reviews, setReviews] = useState([]);
 
@@ -37,15 +42,13 @@ function HomeScreen({navigation}) {
   }, []);
 
   async function checkAsyncStorage() {
-    // console.log('AsyncFunc');
     try {
       const email = await AsyncStorage.getItem('@datalogin');
       if (email === undefined || email === '' || email === null) {
         navigation.navigate('Login');
-      } 
+      }
     } catch (err) {}
   }
-
 
   //auto start set date
   date();
@@ -176,13 +179,16 @@ function App() {
 
 function route({navigation}) {
   return (
-    <Stack.Navigator  initialRouteName="HomeScreen">
+    <Stack.Navigator initialRouteName="HomeScreen">
+      <Stack.Screen
+        name="Login"
+        component={Login}
+        options={{headerShown: false}}></Stack.Screen>
 
-      
-      <Stack.Screen name="Login" component={Login} options={{headerShown: false}}></Stack.Screen>
-
-      
-      <Stack.Screen name="Register" component={Register}options={{
+      <Stack.Screen
+        name="Register"
+        component={Register}
+        options={{
           title: 'ลงทะเบียน',
           headerTitleAlign: 'center',
           headerTintColor: '#fff',
@@ -193,8 +199,8 @@ function route({navigation}) {
           headerStyle: {
             backgroundColor: '#B0D8D8',
             height: 80,
-          },}} ></Stack.Screen>
-
+          },
+        }}></Stack.Screen>
 
       <Stack.Screen
         name="HomeScreen"
@@ -221,7 +227,6 @@ function route({navigation}) {
           ),
         }}
       />
-      
 
       <Stack.Screen
         name="RouteDetail"
@@ -237,7 +242,6 @@ function route({navigation}) {
         }}
       />
 
-
       <Stack.Screen
         name="AddRoute"
         component={AddRoute}
@@ -251,7 +255,6 @@ function route({navigation}) {
           },
         }}
       />
-
 
       <Stack.Screen
         name="CheckTicket"
@@ -267,7 +270,6 @@ function route({navigation}) {
         }}
       />
 
-
       <Stack.Screen
         name="CustomerList"
         component={CustomerList}
@@ -282,12 +284,67 @@ function route({navigation}) {
         }}
       />
 
-
       <Stack.Screen
         name="ConfirmTicket"
         component={ConfirmTicket}
         options={{
           title: 'ยืนยันการจอง',
+          headerTitleAlign: 'center',
+          headerTintColor: '#5660B3',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 25,
+          },
+        }}
+      />
+
+      <Stack.Screen
+        name="Auto_schedule"
+        component={Auto_schedule}
+        options={{
+          title: 'การสร้างรอบอัติโนมัติ',
+          headerTitleAlign: 'center',
+          headerTintColor: '#5660B3',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 25,
+          },
+        }}
+      />
+
+      <Stack.Screen
+        name="Auto_schedule_detail"
+        component={Auto_schedule_detail}
+        options={{
+          title: 'ข้อมูลการสร้างรอบ',
+          headerTitleAlign: 'center',
+          headerTintColor: '#5660B3',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 25,
+          },
+        }}
+      />
+
+      <Stack.Screen
+        name="Auto_schedule_edit"
+        component={Auto_schedule_edit}
+        options={{
+          title: 'แก้ไข',
+          headerTitleAlign: 'center',
+          headerTintColor: '#5660B3',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 25,
+          },
+        }}
+      />
+
+      <Stack.Screen
+        name="Auto_schedule_add"
+        component={Auto_schedule_add}
+        options={{
+          title: 'สร้างรอบ',
           headerTitleAlign: 'center',
           headerTintColor: '#5660B3',
           headerTitleStyle: {

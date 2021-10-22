@@ -9,12 +9,12 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import Register from './register';
+import {sha256} from 'react-native-sha256';
 
 function Login({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [result, setResult] = useState(2);
+  let result
 
   function checkLogin() {
     if (email == '' || password == '') {
@@ -25,24 +25,29 @@ function Login({navigation}) {
   }
 
   async function login_sentApi() {
+    let hash_pass;
+    await sha256(password).then(hash => {
+      hash_pass = hash;
+    });
     await axios
       .post('http://10.0.2.2:3001/user/login_seller', {
         email: email,
-        password: password,
+        password: hash_pass,
       })
-      .then(res => setResult(res.data)); 
-    console.log(result);
+      .then(res => setitem(res)); 
+  }
+
+  async function setitem(res){
+    result = res.data
     if (result.status == 0) { //emai,pass ไม่ตรง
       alert('กรุณากรอกข้อมูลให้ถูกต้อง');
-    } else if (result==2){ } 
-    else { 
+    } else { 
       await AsyncStorage.setItem('@datalogin', email); //เก็บเช้า local storage
       await AsyncStorage.setItem('@dataloginId', result.seller_id);
       await AsyncStorage.setItem('@dataloginName', result.name);
       navigation.navigate('HomeScreen');
     }
   }
-
   return (
     <ImageBackground
       source={require('../images/loginBg.png')}

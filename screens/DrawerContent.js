@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useState, useEffect} from 'react';
 import {log} from 'react-native-reanimated';
 
+
 export function DrawerContent({props, navigation}) {
   
   async function del() {
@@ -27,7 +28,6 @@ export function DrawerContent({props, navigation}) {
   async function getUserName() { 
     const tempName = await AsyncStorage.getItem('@dataloginName');
     setuserName(tempName)
-    console.log(tempName);
   }
 
   return (
@@ -39,6 +39,9 @@ export function DrawerContent({props, navigation}) {
           </View>
         </View>
       </DrawerContentScrollView>
+      <Drawer.Section>
+        <DrawerItem label="การสร้างรอบอัติโนมัติ" onPress={() => navigation.navigate("Auto_schedule")} />
+      </Drawer.Section>
       <Drawer.Section style={styles.bottomDrawerSection}>
         <DrawerItem label="ออกจากระบบ" onPress={() => del()} />
       </Drawer.Section>

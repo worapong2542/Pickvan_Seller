@@ -16,7 +16,7 @@ import styles from '../style/addRouteStyle';
 import axios from 'axios';
 import {Picker} from '@react-native-picker/picker';
 
-function AddRoute({navigation}) {
+function Auto_schedule_add({navigation}) {
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('');
   const [show, setShow] = useState(false);
@@ -98,31 +98,6 @@ function AddRoute({navigation}) {
     }
   }
 
-  //set วันที่
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShow(Platform.OS === 'ios');
-    setDate(currentDate);
-    let tempDate = new Date(currentDate);
-    let fDate =
-      tempDate.getDate() +
-      '/' +
-      (tempDate.getMonth() + 1) +
-      '/' +
-      tempDate.getFullYear();
-    setdate(fDate);
-
-    //set เวลา
-    let fTime = tempDate.getHours() + ' : ' + tempDate.getMinutes();
-    settime(fTime);
-  };
-
-  // function showMode เลือกวันที่
-  const showMode = currentMode => {
-    setShow(true);
-    setMode(currentMode);
-  };
-
   return (
     <ScrollView style={styles.container}>
       {/* drod down เลือกสายรถ */}
@@ -192,17 +167,6 @@ function AddRoute({navigation}) {
         />
       </View>
 
-      {/* เลือกวันที่ */}
-      <Text style={styles.baseText}>วันที่</Text>
-      <View style={styles.box}>
-        <Text style={styles.boxInput}>{textdate}</Text>
-        <TouchableOpacity onPress={() => showMode('date')}>
-          <View style={styles.touch_able}>
-            <Text style={styles.txtDefault}>เลือกวันที่</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
-
       {/* เลือกเวลา */}
       <Text style={styles.baseText}>เวลา</Text>
       <View style={{flexDirection: 'row'}}>
@@ -261,5 +225,5 @@ function AddRoute({navigation}) {
   );
 }
 
-export default AddRoute;
+export default Auto_schedule_add;
 
