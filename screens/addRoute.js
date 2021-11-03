@@ -9,6 +9,7 @@ import {
   TextInput,
   ScrollView,
   TextField,
+  Alert,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import SelectDropdown from 'react-native-select-dropdown';
@@ -73,18 +74,42 @@ function AddRoute({navigation}) {
     setroute(vandata);
   }, [vandata]);
 
-  //set date format and call api
-  function addschedule() {
+  function alert_check() {
     time_format = hours_time[hours] + ':' + minute[min];
-    if (textdate == 'Empty' || price == 0||license_plate=='') {
+    if (textdate == 'Empty' || price == 0 || license_plate == '') {
       alert('กรุณากรอกข้อมูลให้ครบถ้วน');
     } else {
       const url =
         time_format + '/' + textdate + '/' + price + '/' + license_plate;
-      axios
-        .get('http://10.0.2.2:3001/seller/addschedule/' + url)
-        .then(res => call_back(res));
+      Alert.alert(
+        'ยืนยันการสร้าง',
+        'ทะเบียนรถ ' +
+          license_plate +
+          ' เวลา ' +
+          hours_time[hours] +
+          ':' +
+          minute[min] +
+          ' วันที่ ' +
+          textdate +
+          ' ราคา ' +
+          price,
+        [
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {text: 'OK', onPress: () => addschedule(url)},
+        ],
+      );
     }
+  }
+
+  //set date format and call api
+  function addschedule(url) {
+    axios
+      .get('http://10.0.2.2:3001/seller/addschedule/' + url)
+      .then(res => call_back(res));
   }
 
   //wait res for check error
@@ -250,7 +275,7 @@ function AddRoute({navigation}) {
       />
 
       {/* ปุ่มยืนยัน */}
-      <TouchableOpacity onPress={() => addschedule()}>
+      <TouchableOpacity onPress={() => alert_check()}>
         <View style={styles.btnConfirm}>
           <Text style={{color: 'white', fontWeight: 'bold', fontSize: 20}}>
             ยืนยัน
@@ -262,4 +287,3 @@ function AddRoute({navigation}) {
 }
 
 export default AddRoute;
-

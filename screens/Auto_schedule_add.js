@@ -9,6 +9,7 @@ import {
   TextInput,
   ScrollView,
   TextField,
+  Alert,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import SelectDropdown from 'react-native-select-dropdown';
@@ -20,11 +21,8 @@ function Auto_schedule_add({navigation}) {
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('');
   const [show, setShow] = useState(false);
-  const [textdate, setdate] = useState('Empty');
-  const [texttime, settime] = useState('');
   const [hours, sethours] = useState(0);
   const [min, setmin] = useState(0);
-  const [selectedValue, setSelectedValue] = useState();
   const [vandata, setvandata] = useState([]);
   const [price, setprice] = useState(0);
   const [route, setroute] = useState([]);
@@ -73,29 +71,45 @@ function Auto_schedule_add({navigation}) {
     setroute(vandata);
   }, [vandata]);
 
-  //set date format and call api
-  function addschedule() {
+  function alert_check() {
     time_format = hours_time[hours] + ':' + minute[min];
-    if (textdate == 'Empty' || price == 0||license_plate=='') {
+    if (price == 0 || license_plate == '') {
       alert('กรุณากรอกข้อมูลให้ครบถ้วน');
     } else {
-      const url =
-        time_format + '/' + textdate + '/' + price + '/' + license_plate;
-      axios
-        .get('http://10.0.2.2:3001/seller/addschedule/' + url)
-        .then(res => call_back(res));
+      const url = time_format + '/' + price + '/' + license_plate;
+      Alert.alert(
+        'ยืนยันการสร้าง',
+        'ทะเบียนรถ ' +
+          license_plate +
+          ' เวลา ' +
+          hours_time[hours] +
+          ':' +
+          minute[min] +
+          ' ราคา ' +
+          price,
+        [
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {text: 'OK', onPress: () => addschedule(url)},
+        ],
+      );
     }
+  }
+
+  //set date format and call api
+  function addschedule(url) {
+    axios
+      .get('http://10.0.2.2:3001/seller/auto_schedule_add/' + url)
+      .then(res => call_back(res.data));
   }
 
   //wait res for check error
   function call_back(res) {
-    const res_data = res.data;
-    if (res_data == 0) {
-      alert('สร้างรอบเรียบร้อยแล้ว');
-      navigation.push('HomeScreen');
-    } else {
-      alert('Some thing Worng');
-    }
+    alert(res);
+    navigation.push('Auto_schedule');
   }
 
   return (
@@ -214,7 +228,7 @@ function Auto_schedule_add({navigation}) {
       />
 
       {/* ปุ่มยืนยัน */}
-      <TouchableOpacity onPress={() => addschedule()}>
+      <TouchableOpacity onPress={() => alert_check()}>
         <View style={styles.btnConfirm}>
           <Text style={{color: 'white', fontWeight: 'bold', fontSize: 20}}>
             ยืนยัน
@@ -226,4 +240,3 @@ function Auto_schedule_add({navigation}) {
 }
 
 export default Auto_schedule_add;
-

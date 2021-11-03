@@ -60,7 +60,7 @@ function Auto_schedule_edit({route, navigation}) {
 
   async function update(){
     await axios
-    .get('http://10.0.2.2:3001/seller/auto_schedule_update/'+item.license_plate+"/"+hours_time[hours]+':'+minute[min]+"/"+price)
+    .get('http://10.0.2.2:3001/seller/auto_schedule_update/'+item.id+"/"+hours_time[hours]+':'+minute[min]+"/"+price)
     .then(res => alert(res.data));
     navigation.push('Auto_schedule')
   }

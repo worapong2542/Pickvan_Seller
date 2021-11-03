@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Image,
   ScrollView,
+  Alert,
 } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import Card from '../components/card';
@@ -66,10 +67,10 @@ function RouteDetail({route, navigation}) {
       .then(res => setdatavan_and_route(res.data));
   }
 
-  //add walk in api 
+  //add walk in api
   async function addwalkin() {
     if (seat == 0) {
-      alert('จำนวนที่นั่งเกิดข้อผิดพลาด')
+      alert('จำนวนที่นั่งเกิดข้อผิดพลาด');
       getdata_route();
     } else {
       await axios
@@ -89,42 +90,68 @@ function RouteDetail({route, navigation}) {
     }
   }
 
+  function alert_check() {
+    Alert.alert(
+      'ยืนยันการเพิ่มที่นั่ง',
+      'ลูกค้าWalk in จำนวน ' +
+        seat +
+        ' คน ลงที่ ' +
+        options[selectedValue] +
+        ' รวมราคา ' +
+        seat * item.item.price,
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {text: 'OK', onPress: () => addwalkin()},
+      ],
+    );
+  }
+
   return (
     <View style={{flex: 1, backgroundColor: '#fff'}}>
       <Card>
-        <Text style={styles.textTime}>{item.item.time.substring(0, 5)}
-        </Text>
+        <Text style={styles.textTime}>{item.item.time.substring(0, 5)}</Text>
         <Text style={styles.textDefault}>{item.item.destination}</Text>
         <Text style={styles.textDefault}>{item.item.license}</Text>
       </Card>
 
       <Card>
-      <View style={{flexDirection:'row'}}>
-         <Text style={styles.textSeat}>ราคาต่อที่นั่ง : </Text>
-          <Text style={styles.textDefault}>           {item.item.price}</Text>
-         </View>
+        <View style={{flexDirection: 'row'}}>
+          <Text style={styles.textSeat}>ราคาต่อที่นั่ง : </Text>
+          <Text style={styles.textDefault}> {item.item.price}</Text>
+        </View>
 
-        <View style={{flexDirection:'row'}}>
+        <View style={{flexDirection: 'row'}}>
           <Text style={styles.textSeat}>จำนวนที่นั่งทั้งหมด : </Text>
-          <Text style={styles.textDefault}>  {datavan_and_route.vanseat}</Text>
-         </View>
+          <Text style={styles.textDefault}> {datavan_and_route.vanseat}</Text>
+        </View>
 
-         <View style={{flexDirection:'row'}}>
-          <Text style={styles.textSeat}>จำนวนที่นั่งที่เหลือ :    </Text>
+        <View style={{flexDirection: 'row'}}>
+          <Text style={styles.textSeat}>จำนวนที่นั่งที่เหลือ : </Text>
           <Text style={styles.textDefault}>{datavan_and_route.set_free}</Text>
         </View>
 
         <TouchableOpacity
           onPress={() => navigation.navigate('CustomerList', {item: {item}})}>
-          <Text style={styles.txtHead}>กดดูรายชื่อผู้โดยสาร</Text>
+          <Text style={styles.txtHead}>กดดูข้อมูลที่นั่งผู้โดยสาร</Text>
         </TouchableOpacity>
       </Card>
 
       <Card>
         <View>
           <Text style={styles.txtHead}>เพิ่มที่นั่ง walk in </Text>
-         
-            <View style={{flexDirection: 'row',alignContent:'center',alignItems:'center',alignSelf:'center',backgroundColor: 'white'}} >
+
+          <View
+            style={{
+              flexDirection: 'row',
+              alignContent: 'center',
+              alignItems: 'center',
+              alignSelf: 'center',
+              backgroundColor: 'white',
+            }}>
             <TouchableOpacity
               style={styles.blockAddSeatPlus}
               onPress={() => setseat(seat + 1)}>
@@ -134,12 +161,11 @@ function RouteDetail({route, navigation}) {
             <Text style={styles.baseText}>{seat}</Text>
 
             <TouchableOpacity
-               style={styles.blockAddSeatMinus}
+              style={styles.blockAddSeatMinus}
               onPress={() => setseat(seat - 1)}>
-              <Text style={styles.baseText} > - </Text>
+              <Text style={styles.baseText}> - </Text>
             </TouchableOpacity>
-            </View>
-
+          </View>
         </View>
 
         <View style={styles.container}>
@@ -155,7 +181,7 @@ function RouteDetail({route, navigation}) {
           </Picker>
         </View>
 
-        <TouchableOpacity onPress={() => addwalkin()}>
+        <TouchableOpacity onPress={() => alert_check()}>
           <View style={styles.btnConfirm}>
             <Text style={{color: 'white', fontWeight: 'bold', fontSize: 20}}>
               ยืนยัน
@@ -181,12 +207,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 10,
   },
-  textSeat:{
+  textSeat: {
     color: '#5660B3',
     // fontWeight: 'bold',
     fontSize: 16,
     marginBottom: 10,
-    marginRight: 170
+    marginRight: 170,
   },
   txtHead: {
     alignSelf: 'center',
@@ -221,9 +247,8 @@ const styles = StyleSheet.create({
     color: 'rgba(86, 96, 179, 1)',
     fontSize: 18,
     marginLeft: 50,
-    marginRight:50,
-    marginTop:15,
-    marginBottom:15
+    marginRight: 50,
+    marginTop: 15,
+    marginBottom: 15,
   },
-
 });

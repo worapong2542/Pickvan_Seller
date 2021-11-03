@@ -29,7 +29,7 @@ function Auto_schedule_detail({route, navigation}) {
 
   async function del_api(){
     await axios
-    .get('http://10.0.2.2:3001/seller/auto_schedule_del/'+item.item.license_plate+"/"+item.item.time.substring(0, 5))
+    .get('http://10.0.2.2:3001/seller/auto_schedule_del/'+item.item.id)
     .then(res => alert(res.data));
     navigation.push('Auto_schedule')
   }
