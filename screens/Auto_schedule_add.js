@@ -17,15 +17,12 @@ import styles from '../style/addRouteStyle';
 import axios from 'axios';
 import {Picker} from '@react-native-picker/picker';
 
-function AddRoute({navigation}) {
+function Auto_schedule_add({navigation}) {
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('');
   const [show, setShow] = useState(false);
-  const [textdate, setdate] = useState('Empty');
-  const [texttime, settime] = useState('');
   const [hours, sethours] = useState(0);
   const [min, setmin] = useState(0);
-  const [selectedValue, setSelectedValue] = useState();
   const [vandata, setvandata] = useState([]);
   const [price, setprice] = useState(0);
   const [route, setroute] = useState([]);
@@ -76,11 +73,10 @@ function AddRoute({navigation}) {
 
   function alert_check() {
     time_format = hours_time[hours] + ':' + minute[min];
-    if (textdate == 'Empty' || price == 0 || license_plate == '') {
+    if (price == 0 || license_plate == '') {
       alert('กรุณากรอกข้อมูลให้ครบถ้วน');
     } else {
-      const url =
-        time_format + '/' + textdate + '/' + price + '/' + license_plate;
+      const url = time_format + '/' + price + '/' + license_plate;
       Alert.alert(
         'ยืนยันการสร้าง',
         'ทะเบียนรถ ' +
@@ -89,8 +85,6 @@ function AddRoute({navigation}) {
           hours_time[hours] +
           ':' +
           minute[min] +
-          ' วันที่ ' +
-          textdate +
           ' ราคา ' +
           price,
         [
@@ -108,45 +102,15 @@ function AddRoute({navigation}) {
   //set date format and call api
   function addschedule(url) {
     axios
-      .get('http://10.0.2.2:3001/seller/addschedule/' + url)
-      .then(res => call_back(res));
+      .get('http://10.0.2.2:3001/seller/auto_schedule_add/' + url)
+      .then(res => call_back(res.data));
   }
 
   //wait res for check error
   function call_back(res) {
-    const res_data = res.data;
-    if (res_data == 0) {
-      alert('สร้างรอบเรียบร้อยแล้ว');
-      navigation.push('HomeScreen');
-    } else {
-      alert('Some thing Worng');
-    }
+    alert(res);
+    navigation.push('Auto_schedule');
   }
-
-  //set วันที่
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShow(Platform.OS === 'ios');
-    setDate(currentDate);
-    let tempDate = new Date(currentDate);
-    let fDate =
-      tempDate.getDate() +
-      '/' +
-      (tempDate.getMonth() + 1) +
-      '/' +
-      tempDate.getFullYear();
-    setdate(fDate);
-
-    //set เวลา
-    let fTime = tempDate.getHours() + ' : ' + tempDate.getMinutes();
-    settime(fTime);
-  };
-
-  // function showMode เลือกวันที่
-  const showMode = currentMode => {
-    setShow(true);
-    setMode(currentMode);
-  };
 
   return (
     <ScrollView style={styles.container}>
@@ -217,17 +181,6 @@ function AddRoute({navigation}) {
         />
       </View>
 
-      {/* เลือกวันที่ */}
-      <Text style={styles.baseText}>วันที่</Text>
-      <View style={styles.box}>
-        <Text style={styles.boxInput}>{textdate}</Text>
-        <TouchableOpacity onPress={() => showMode('date')}>
-          <View style={styles.touch_able}>
-            <Text style={styles.txtDefault}>เลือกวันที่</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
-
       {/* เลือกเวลา */}
       <Text style={styles.baseText}>เวลา</Text>
       <View style={{flexDirection: 'row'}}>
@@ -286,4 +239,4 @@ function AddRoute({navigation}) {
   );
 }
 
-export default AddRoute;
+export default Auto_schedule_add;
