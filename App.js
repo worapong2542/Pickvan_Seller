@@ -1,6 +1,5 @@
 import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import RouteDetail from './screens/routeDetail';
 import AddRoute from './screens/addRoute';
@@ -12,12 +11,10 @@ import {FlatList} from 'react-native-gesture-handler';
 import Card from './components/card';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Icon} from 'react-native-elements';
 import axios from 'axios';
 import CardDate from './components/cardDate';
 import {DrawerContent} from './screens/DrawerContent';
 import Login from './screens/login';
-import Register from './screens/register';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Auto_schedule from './screens/auto_schedule';
@@ -86,7 +83,7 @@ function HomeScreen({navigation}) {
     <View style={{flex: 1, backgroundColor: '#fff'}}>
       {/* show 3 days */}
       <View style={{flex: 1, justifyContent: 'center'}}>
-        <View style={{flexDirection: 'row', marginRight: 10, marginLeft: 10}}>
+        <View style={{flexDirection: 'row',paddingLeft:10, paddingRight:10}}>
           <CardDate>
             <TouchableOpacity
               style={styles.boxDate}
@@ -115,27 +112,21 @@ function HomeScreen({navigation}) {
         <FlatList
           data={reviews}
           renderItem={({item}) => (
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate('RouteDetail', {item: {item}})
-              }>
+            <TouchableOpacity onPress={() =>navigation.navigate('RouteDetail', {item: {item}})}>
               <Card>
                 <Text style={styles.textTime}>{item.time.substring(0, 5)}</Text>
                 <Text style={styles.textDefault}>{item.destination}</Text>
                 <View style={{flexDirection: 'row'}}>
-                  <Text style={styles.textDefault}>ราคา: </Text>
-                  <Text style={styles.textDefault}>{item.price}</Text>
-                </View>
-                <View style={{flexDirection: 'row'}}>
-                  <Text style={styles.textDefault}>{item.license}</Text>
-                  <TouchableOpacity
-                    onPress={() =>
-                      navigation.navigate('RouteDetail', {item: {item}})
-                    }>
+                  <View style={{ flex: 2}}>
+                    <Text style={styles.textDefault}>{item.license}</Text>
+                  </View>
+                  <View style={{ flex: 1}}>
+                  <TouchableOpacity onPress={() =>navigation.navigate('RouteDetail', {item: {item}})}>
                     <View style={styles.btnCheck}>
                       <Text style={styles.textCheck}>ดูรายละเอียด</Text>
                     </View>
                   </TouchableOpacity>
+                  </View>
                 </View>
               </Card>
             </TouchableOpacity>
@@ -184,23 +175,6 @@ function route({navigation}) {
         name="Login"
         component={Login}
         options={{headerShown: false}}></Stack.Screen>
-
-      <Stack.Screen
-        name="Register"
-        component={Register}
-        options={{
-          title: 'ลงทะเบียน',
-          headerTitleAlign: 'center',
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-            fontSize: 25,
-          },
-          headerStyle: {
-            backgroundColor: '#B0D8D8',
-            height: 80,
-          },
-        }}></Stack.Screen>
 
       <Stack.Screen
         name="HomeScreen"
@@ -412,10 +386,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#FEB5A6',
     borderRadius: 20,
     height: 30,
-    width: '50%',
+    width: 120,
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft: 170,
   },
   textCheck: {
     color: 'white',

@@ -3,12 +3,10 @@ import {
   StyleSheet,
   View,
   Image,
-  Platform,
   Text,
   TouchableOpacity,
   TextInput,
   ScrollView,
-  TextField,
   Alert,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -115,6 +113,7 @@ function Auto_schedule_add({navigation}) {
   return (
     <ScrollView style={styles.container}>
       {/* drod down เลือกสายรถ */}
+      <View style={{flex:2}}>
       <View style={styles.dropdownsRow}>
         <SelectDropdown
           data={route}
@@ -226,8 +225,9 @@ function Auto_schedule_add({navigation}) {
         maxLength={4}
         onChangeText={setprice}
       />
+      </View>
 
-      {/* ปุ่มยืนยัน */}
+      <View style={{flex:1, marginTop:80}}>
       <TouchableOpacity onPress={() => alert_check()}>
         <View style={styles.btnConfirm}>
           <Text style={{color: 'white', fontWeight: 'bold', fontSize: 20}}>
@@ -235,6 +235,7 @@ function Auto_schedule_add({navigation}) {
           </Text>
         </View>
       </TouchableOpacity>
+      </View>
     </ScrollView>
   );
 }

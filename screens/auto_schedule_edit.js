@@ -1,14 +1,10 @@
 import React, {useState, useRef, useEffect} from 'react';
 import {
-  StyleSheet,
   View,
-  Image,
-  Platform,
   Text,
   TouchableOpacity,
   TextInput,
   ScrollView,
-  TextField,
   Alert,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';

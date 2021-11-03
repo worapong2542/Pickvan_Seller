@@ -114,24 +114,42 @@ function RouteDetail({route, navigation}) {
     <View style={{flex: 1, backgroundColor: '#fff'}}>
       <Card>
         <Text style={styles.textTime}>{item.item.time.substring(0, 5)}</Text>
-        <Text style={styles.textDefault}>{item.item.destination}</Text>
-        <Text style={styles.textDefault}>{item.item.license}</Text>
+        <View style={{flexDirection: 'row'}}>
+            <View style={{ flex: 2}}>
+              <Text style={styles.textDefault}>{item.item.destination} </Text>
+            </View>
+            <View style={{ flex: 1, paddingLeft:80}}>
+              <Text style={styles.textDefault}>{item.item.license}</Text>
+            </View>
+        </View>  
       </Card>
 
       <Card>
         <View style={{flexDirection: 'row'}}>
-          <Text style={styles.textSeat}>ราคาต่อที่นั่ง : </Text>
-          <Text style={styles.textDefault}> {item.item.price}</Text>
+            <View style={{ flex: 2}}>
+              <Text style={styles.textDefault}>ราคาต่อที่นั่ง :</Text>
+            </View>
+            <View style={{ flex: 1, paddingLeft:80}}>
+              <Text style={styles.textDefault}>{item.item.price}   บาท</Text>
+            </View>
+        </View> 
+
+        <View style={{flexDirection: 'row'}}>
+            <View style={{ flex: 2}}>
+              <Text style={styles.textDefault}>จำนวนที่นั่งทั้งหมด : </Text>
+            </View>
+            <View style={{ flex: 1, paddingLeft:80}}>
+              <Text style={styles.textDefault}>{datavan_and_route.vanseat}     ที่</Text>
+            </View>
         </View>
 
         <View style={{flexDirection: 'row'}}>
-          <Text style={styles.textSeat}>จำนวนที่นั่งทั้งหมด : </Text>
-          <Text style={styles.textDefault}> {datavan_and_route.vanseat}</Text>
-        </View>
-
-        <View style={{flexDirection: 'row'}}>
-          <Text style={styles.textSeat}>จำนวนที่นั่งที่เหลือ : </Text>
-          <Text style={styles.textDefault}>{datavan_and_route.set_free}</Text>
+            <View style={{ flex: 2}}>
+              <Text style={styles.textDefault}>จำนวนที่นั่งที่เหลือ :  </Text>
+            </View>
+            <View style={{ flex: 1, paddingLeft:80}}>
+              <Text style={styles.textDefault}>{datavan_and_route.vanseat}     ที่</Text>
+            </View>
         </View>
 
         <TouchableOpacity
@@ -199,8 +217,9 @@ const styles = StyleSheet.create({
   textTime: {
     color: '#5660B3',
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 18,
     marginBottom: 10,
+    textAlign: 'center'
   },
   textDefault: {
     color: '#5660B3',

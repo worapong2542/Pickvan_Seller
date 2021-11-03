@@ -1,16 +1,11 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
 import {Drawer} from 'react-native-paper';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useState, useEffect} from 'react';
-import {log} from 'react-native-reanimated';
-
 
 export function DrawerContent({props, navigation}) {
-  
   async function del() {
     await AsyncStorage.removeItem('@datalogin');
     await AsyncStorage.removeItem('@dataloginId');
@@ -18,16 +13,16 @@ export function DrawerContent({props, navigation}) {
     navigation.navigate('Login');
   }
 
-  const [userName, setuserName] = useState('')
+  const [userName, setuserName] = useState('');
 
   //ทำงานเมื่อหน้าถูกเรียกใช้
   useEffect(() => {
     getUserName();
   }, []); //[] ทำงานรอบเดียว
 
-  async function getUserName() { 
+  async function getUserName() {
     const tempName = await AsyncStorage.getItem('@dataloginName');
-    setuserName(tempName)
+    setuserName(tempName);
   }
 
   return (
@@ -38,12 +33,18 @@ export function DrawerContent({props, navigation}) {
             <Text style={styles.txtUserName}> {userName}</Text>
           </View>
         </View>
+
+        <View style={styles.drawerMenu}>
+          <DrawerItem
+            label="การสร้างรอบอัตโนมัติ"
+            onPress={() => navigation.navigate('Auto_schedule')}
+          />
+        </View>
+
       </DrawerContentScrollView>
-      <Drawer.Section>
-        <DrawerItem label="การสร้างรอบอัติโนมัติ" onPress={() => navigation.navigate("Auto_schedule")} />
-      </Drawer.Section>
+
       <Drawer.Section style={styles.bottomDrawerSection}>
-        <DrawerItem label="ออกจากระบบ" onPress={() => del()} />
+        <DrawerItem label="ออกจากระบบ" onPress={() => del()}/>
       </Drawer.Section>
     </View>
   );
@@ -53,10 +54,10 @@ const styles = StyleSheet.create({
   drawerContent: {
     flex: 1,
   },
-  title: {
-    fontSize: 16,
-    margin: 3,
-    fontWeight: 'bold',
+  drawerMenu:{
+    paddingTop: 20,
+    paddingLeft: 5,
+
   },
   userInfoSection: {
     paddingLeft: 20,
@@ -71,4 +72,8 @@ const styles = StyleSheet.create({
     borderColor: '#f4f4f4',
     borderTopWidth: 1,
   },
+  textDefault:{
+    color: '#5660B3',
+    fontSize: 18,
+  }
 });

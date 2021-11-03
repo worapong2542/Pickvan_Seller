@@ -82,12 +82,6 @@ function Login({navigation}) {
           <TouchableOpacity onPress={() => checkLogin()} style={styles.button}>
             <Text style={styles.buttonText}> ลงชื่อเข้าใช้</Text>
           </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => navigation.navigate('Register')}
-            style={styles.buttonRegister}>
-            <Text style={styles.buttonRegisterText}> ยังไม่มีบัญชีผู้ใช้? </Text>
-          </TouchableOpacity>
         </View>
       </View>
     </ImageBackground>

@@ -1,14 +1,9 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Text,
   View,
-  Button,
-  TouchableOpacity,
   StyleSheet,
-  Image,
-  ScrollView,
 } from 'react-native';
-import {Picker} from '@react-native-picker/picker';
 import Card from '../components/card';
 import axios from 'axios';
 
@@ -31,24 +26,39 @@ function CustomerList({route, navigation}) {
   return (
     <View style={{flex: 1, backgroundColor: '#fff'}}>
       <Card>
-        <Text style={styles.textBold}>{new_item.time.substring(0, 5)}</Text>
-        <Text style={styles.textDefault}>{new_item.destination}</Text>
-        <Text style={styles.textDefault}>{new_item.license}</Text>
+        <Text style={styles.textTime}>{new_item.time.substring(0, 5)}</Text>
+        <View style={{flexDirection: 'row'}}>
+            <View style={{ flex: 2}}>
+              <Text style={styles.textDefault}>{new_item.destination}</Text>
+            </View>
+            <View style={{ flex: 1, paddingLeft:80}}>
+              <Text style={styles.textDefault}>{new_item.license}</Text>
+            </View>
+        </View>  
       </Card>
 
       <Card>
         <Text style={styles.textBold}>walkin </Text>
-        <Text style={styles.textDefault}>
-          {' '}
-          จำนวน : <Text style={styles.textBold}>{data.walkin}</Text> คน
-        </Text>
+        <View style={{flexDirection: 'row'}}>
+            <View style={{ flex: 2}}>
+              <Text style={styles.textDefault}>จำนวน : </Text>
+            </View>
+            <View style={{ flex: 1, paddingLeft:80}}>
+              <Text style={styles.textDefault}>{data.walkin}   คน</Text>
+            </View>
+        </View>
       </Card>
 
       <Card>
         <Text style={styles.textBold}>การซื้อผ่าน app</Text>
-        <Text style={styles.textDefault}>
-          จำนวน : <Text style={styles.textBold}>{data.app}</Text> คน
-        </Text>
+        <View style={{flexDirection: 'row'}}>
+            <View style={{ flex: 2}}>
+              <Text style={styles.textDefault}>จำนวน : </Text>
+            </View>
+            <View style={{ flex: 1, paddingLeft:80}}>
+              <Text style={styles.textDefault}>{data.app}   คน</Text>
+            </View>
+        </View>
         
         <Text style={styles.textDefault}>
           เลขตั๋ว :   
@@ -63,6 +73,13 @@ function CustomerList({route, navigation}) {
 
 export default CustomerList;
 const styles = StyleSheet.create({
+  textTime: {
+    color: '#5660B3',
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginBottom: 10,
+    textAlign: 'center'
+  },
   textBold: {
     color: '#5660B3',
     fontWeight: 'bold',
