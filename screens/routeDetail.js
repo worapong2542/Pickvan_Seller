@@ -148,7 +148,7 @@ function RouteDetail({route, navigation}) {
               <Text style={styles.textDefault}>จำนวนที่นั่งที่เหลือ :  </Text>
             </View>
             <View style={{ flex: 1, paddingLeft:80}}>
-              <Text style={styles.textDefault}>{datavan_and_route.vanseat}     ที่</Text>
+              <Text style={styles.textDefault}>{datavan_and_route.set_free}     ที่</Text>
             </View>
         </View>
 

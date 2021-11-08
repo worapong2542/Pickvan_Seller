@@ -67,6 +67,24 @@ function CustomerList({route, navigation}) {
           </Text>
         </Text>
       </Card>
+      <Card>
+        <Text style={styles.textBold}>กำลังรอการยืนยัน</Text>
+        <View style={{flexDirection: 'row'}}>
+            <View style={{ flex: 2}}>
+              <Text style={styles.textDefault}>จำนวน : </Text>
+            </View>
+            <View style={{ flex: 1, paddingLeft:80}}>
+              <Text style={styles.textDefault}>{data.waiting_amount}   คน</Text>
+            </View>
+        </View>
+        
+        <Text style={styles.textDefault}>
+          เลขตั๋ว :   
+          <Text style={styles.textBold}>
+            {data.ticket_id_waiting}
+          </Text>
+        </Text>
+      </Card>
     </View>
   );
 }
