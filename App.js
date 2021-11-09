@@ -96,19 +96,19 @@ function HomeScreen({navigation}) {
         <View style={{flexDirection: 'row', paddingLeft: 10, paddingRight: 10}}>
           <TouchableOpacity
             style={test.colorId === 1? styles.red : styles.button}
-            onPress={() => funonPress(1,0)}>
+            onPress={() => testChange(1,0)}>
             <Text style={styles.textDate}>{date_format[0]}</Text>
           </TouchableOpacity>
 
             <TouchableOpacity
               style={test.colorId === 2? styles.red : styles.button}
-              onPress={() => funonPress(2,1)}>
+              onPress={() => testChange(2,1)}>
               <Text style={styles.textDate}>{date_format[1]}</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={test.colorId === 3? styles.red : styles.button}
-              onPress={() => funonPress(3,2)}>
+              onPress={() => testChange(3,2)}>
               <Text style={styles.textDate}>{date_format[2]}</Text>
             </TouchableOpacity>
 
