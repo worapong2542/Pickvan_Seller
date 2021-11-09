@@ -405,13 +405,19 @@ const styles = StyleSheet.create({
   },
 
   red: {
-    backgroundColor: 'red',
+    backgroundColor: '#FEB5A6',
     alignItems: 'center',
+    width:120,
     padding: 10,
+    marginHorizontal:5,
+    borderRadius:10
   },
   button: {
     alignItems: 'center',
     backgroundColor: '#DDDDDD',
+    width:120,
     padding: 10,
+    marginHorizontal:5,
+    borderRadius:10
   },
 });
