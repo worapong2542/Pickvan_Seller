@@ -92,7 +92,7 @@ function HomeScreen({navigation}) {
       <View style={{flex: 1, justifyContent: 'center'}}>
         <View style={{flexDirection: 'row', paddingLeft: 10, paddingRight: 10}}>
           <TouchableOpacity
-            style={test.colorId === 1 ? styles.gray : styles.button1}
+            style={test.colorId === 1 ? styles.button : styles.red}
             onPress={() => testChange(1, 0)}>
             <Text style={styles.textDate}>{date_format[0]}</Text>
           </TouchableOpacity>
