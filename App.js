@@ -80,10 +80,10 @@ function HomeScreen({navigation}) {
   }
 
   const [test, settest] = useState({colorId: 0});
- 
-  function testChange (id_color,id_date){
-    settest({colorId:id_color})
-    set_select_date(id_date)
+
+  function testChange(id_color, id_date) {
+    settest({colorId: id_color});
+    set_select_date(id_date);
   }
 
   return (
@@ -92,23 +92,22 @@ function HomeScreen({navigation}) {
       <View style={{flex: 1, justifyContent: 'center'}}>
         <View style={{flexDirection: 'row', paddingLeft: 10, paddingRight: 10}}>
           <TouchableOpacity
-            style={test.colorId === 1? styles.red : styles.button}
-            onPress={() => testChange(1,0)}>
+            style={test.colorId === 1 ? styles.gray : styles.button1}
+            onPress={() => testChange(1, 0)}>
             <Text style={styles.textDate}>{date_format[0]}</Text>
           </TouchableOpacity>
 
-            <TouchableOpacity
-              style={test.colorId === 2? styles.red : styles.button}
-              onPress={() => testChange(2,1)}>
-              <Text style={styles.textDate}>{date_format[1]}</Text>
-            </TouchableOpacity>
+          <TouchableOpacity
+            style={test.colorId === 2 ? styles.red : styles.button}
+            onPress={() => testChange(2, 1)}>
+            <Text style={styles.textDate}>{date_format[1]}</Text>
+          </TouchableOpacity>
 
-            <TouchableOpacity
-              style={test.colorId === 3? styles.red : styles.button}
-              onPress={() => testChange(3,2)}>
-              <Text style={styles.textDate}>{date_format[2]}</Text>
-            </TouchableOpacity>
-
+          <TouchableOpacity
+            style={test.colorId === 3 ? styles.red : styles.button}
+            onPress={() => testChange(3, 2)}>
+            <Text style={styles.textDate}>{date_format[2]}</Text>
+          </TouchableOpacity>
         </View>
 
         <FlatList
@@ -404,17 +403,33 @@ const styles = StyleSheet.create({
   red: {
     backgroundColor: '#FEB5A6',
     alignItems: 'center',
-    width:120,
+    width: 120,
     padding: 10,
-    marginHorizontal:5,
-    borderRadius:10
+    marginHorizontal: 5,
+    borderRadius: 10,
+  },
+  gray: {
+    backgroundColor: '#DDDDDD',
+    alignItems: 'center',
+    width: 120,
+    padding: 10,
+    marginHorizontal: 5,
+    borderRadius: 10,
   },
   button: {
     alignItems: 'center',
     backgroundColor: '#DDDDDD',
-    width:120,
+    width: 120,
     padding: 10,
-    marginHorizontal:5,
-    borderRadius:10
+    marginHorizontal: 5,
+    borderRadius: 10,
+  },
+  button1: {
+    alignItems: 'center',
+    backgroundColor: '#FEB5A6',
+    width: 120,
+    padding: 10,
+    marginHorizontal: 5,
+    borderRadius: 10,
   },
 });
