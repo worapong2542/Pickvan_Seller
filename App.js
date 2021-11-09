@@ -79,53 +79,64 @@ function HomeScreen({navigation}) {
       .then(res => setdataschedule(res.data));
   }
 
+  const [test, settest] = useState({colorId: 0});
+  function funonPress(id_color) {
+    settest({colorId: id_color});
+  }
+
+  function testChange (id_color,id_date){
+    settest({colorId:id_color})
+    set_select_date(id_date)
+  }
+
   return (
     <View style={{flex: 1, backgroundColor: '#fff'}}>
       {/* show 3 days */}
       <View style={{flex: 1, justifyContent: 'center'}}>
-        <View style={{flexDirection: 'row',paddingLeft:10, paddingRight:10}}>
-          <CardDate>
-            <TouchableOpacity
-              style={styles.boxDate}
-              onPress={() => set_select_date(0)}>
-              <Text style={styles.textDate}>{date_format[0]}</Text>
-            </TouchableOpacity>
-          </CardDate>
+        <View style={{flexDirection: 'row', paddingLeft: 10, paddingRight: 10}}>
+          <TouchableOpacity
+            style={test.colorId === 1? styles.red : styles.button}
+            onPress={() => funonPress(1,0)}>
+            <Text style={styles.textDate}>{date_format[0]}</Text>
+          </TouchableOpacity>
 
-          <CardDate>
             <TouchableOpacity
-              style={styles.boxDate}
-              onPress={() => set_select_date(1)}>
+              style={test.colorId === 2? styles.red : styles.button}
+              onPress={() => funonPress(2,1)}>
               <Text style={styles.textDate}>{date_format[1]}</Text>
             </TouchableOpacity>
-          </CardDate>
 
-          <CardDate>
             <TouchableOpacity
-              style={styles.boxDate}
-              onPress={() => set_select_date(2)}>
+              style={test.colorId === 3? styles.red : styles.button}
+              onPress={() => funonPress(3,2)}>
               <Text style={styles.textDate}>{date_format[2]}</Text>
             </TouchableOpacity>
-          </CardDate>
+
         </View>
 
         <FlatList
           data={reviews}
           renderItem={({item}) => (
-            <TouchableOpacity onPress={() =>navigation.navigate('RouteDetail', {item: {item}})}>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('RouteDetail', {item: {item}})
+              }>
               <Card>
                 <Text style={styles.textTime}>{item.time.substring(0, 5)}</Text>
                 <Text style={styles.textDefault}>{item.destination}</Text>
                 <View style={{flexDirection: 'row'}}>
-                  <View style={{ flex: 2}}>
+                  <View style={{flex: 2}}>
                     <Text style={styles.textDefault}>{item.license}</Text>
                   </View>
-                  <View style={{ flex: 1}}>
-                  <TouchableOpacity onPress={() =>navigation.navigate('RouteDetail', {item: {item}})}>
-                    <View style={styles.btnCheck}>
-                      <Text style={styles.textCheck}>ดูรายละเอียด</Text>
-                    </View>
-                  </TouchableOpacity>
+                  <View style={{flex: 1}}>
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate('RouteDetail', {item: {item}})
+                      }>
+                      <View style={styles.btnCheck}>
+                        <Text style={styles.textCheck}>ดูรายละเอียด</Text>
+                      </View>
+                    </TouchableOpacity>
                   </View>
                 </View>
               </Card>
@@ -364,9 +375,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
   },
-  boxDate: {
-    width: 91,
-  },
   btnDetail: {
     backgroundColor: '#FEB5A6',
     borderRadius: 20,
@@ -394,5 +402,16 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 16,
+  },
+
+  red: {
+    backgroundColor: 'red',
+    alignItems: 'center',
+    padding: 10,
+  },
+  button: {
+    alignItems: 'center',
+    backgroundColor: '#DDDDDD',
+    padding: 10,
   },
 });
