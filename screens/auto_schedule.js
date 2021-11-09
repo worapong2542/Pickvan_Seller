@@ -1,4 +1,11 @@
-import {Text, View, StyleSheet, TouchableOpacity, Button, Alert} from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Button,
+  Alert,
+} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import Card from '../components/card';
 import axios from 'axios';
@@ -18,7 +25,7 @@ function Auto_schedule({navigation}) {
   }
 
   return (
-    <View>
+    <View style={{flex: 2, backgroundColor: '#fff'}}>
       <FlatList
         data={reviews}
         renderItem={({item}) => (
@@ -53,10 +60,9 @@ function Auto_schedule({navigation}) {
           </TouchableOpacity>
         )}
       />
-     <Button
-          title="สร้างรอบรถ"
-          onPress={() => navigation.navigate('Auto_schedule_add')}
-        />
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Auto_schedule_add')}>
+        <Text style={styles.textbutton}> สร้างรอบรถ</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -135,5 +141,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginLeft: 100,
     marginTop: -0,
+  },
+  button: {
+    alignItems: "center",
+    backgroundColor: "#FEB5A6",
+    padding: 10
+  },
+  textbutton: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 18,
   },
 });
