@@ -80,10 +80,7 @@ function HomeScreen({navigation}) {
   }
 
   const [test, settest] = useState({colorId: 0});
-  function funonPress(id_color) {
-    settest({colorId: id_color});
-  }
-
+ 
   function testChange (id_color,id_date){
     settest({colorId:id_color})
     set_select_date(id_date)
