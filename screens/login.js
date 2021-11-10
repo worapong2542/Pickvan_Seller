@@ -34,7 +34,7 @@ function Login({navigation}) {
         email: email,
         password: hash_pass,
       })
-      .then(res => setitem(res)); 
+      .then(res => setitem(res)); //ส่ง res ไป setitem()
   }
 
   async function setitem(res){

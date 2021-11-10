@@ -92,8 +92,8 @@ function HomeScreen({navigation}) {
       <View style={{flex: 1, justifyContent: 'center'}}>
         <View style={{flexDirection: 'row', paddingLeft: 10, paddingRight: 10}}>
           <TouchableOpacity
-            style={test.colorId === 1 ? styles.button : styles.red}
-            onPress={() => testChange(1, 0)}>
+            style={test.colorId === 0 ? styles.red : styles.button}
+            onPress={() => testChange(0, 0)}>
             <Text style={styles.textDate}>{date_format[0]}</Text>
           </TouchableOpacity>
 
@@ -408,14 +408,15 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     borderRadius: 10,
   },
-  gray: {
-    backgroundColor: '#DDDDDD',
+  red1: {
+    backgroundColor: '#FEB5A6',
     alignItems: 'center',
     width: 120,
     padding: 10,
     marginHorizontal: 5,
     borderRadius: 10,
   },
+  
   button: {
     alignItems: 'center',
     backgroundColor: '#DDDDDD',
@@ -424,12 +425,5 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     borderRadius: 10,
   },
-  button1: {
-    alignItems: 'center',
-    backgroundColor: '#FEB5A6',
-    width: 120,
-    padding: 10,
-    marginHorizontal: 5,
-    borderRadius: 10,
-  },
+ 
 });
