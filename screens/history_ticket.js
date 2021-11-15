@@ -3,46 +3,18 @@ import {useState, useEffect} from 'react';
 import {
   Text,
   View,
-  Button,
-  TouchableOpacity,
   StyleSheet,
   ScrollView,
   Image,
-  Alert,
 } from 'react-native';
 import Card from '../components/card';
 import axios from 'axios';
-import {launchImageLibrary} from 'react-native-image-picker';
-import ImgToBase64 from 'react-native-image-base64';
-import base64 from 'react-native-base64';
 
-function ConfirmTicket({route, navigation}) {
+
+function History_ticket({route, navigation}) {
   const {item} = route.params;
   const [renImg, setrenImg] = useState();
   const [showImg, setshowImg] = useState('');
-
-  async function update_stats_ticket(state) {
-    await axios
-      .get('http://10.0.2.2:3001/seller/update/' + item.item.ticket_id + '/' + state)
-      .then(res => alert(res.data));
-    navigation.push('CheckTicket');
-  }
-
-  function alert_check(text, state) {
-    Alert.alert(
-      'ยืนยันรายการ',
-      'ท่านต้องการที่จะ ' + text + ' การจองของตั๋วใบนี้',
-      [
-        {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
-        },
-        {text: 'OK', onPress: () => update_stats_ticket(state)},
-      ],
-    );
-  }
-
   useEffect(() => {
     fun_showImg();
   }, []);
@@ -57,6 +29,18 @@ function ConfirmTicket({route, navigation}) {
     let textImg = 'data:image/png;base64,' + showImg;
     setrenImg(textImg);
   }, [showImg]);
+
+  function check_status(status_id) {
+    if (status_id == 0) {
+      return 'กำลังรอการจ่ายเงิน';
+    } else if (status_id == 1) {
+      return 'กำลังตรวจสอบ';
+    } else if (status_id == 2) {
+      return 'ตั๋วถูกยืนยันแล้ว';
+    } else {
+      return 'ตั๋วถูกยกเลิก';
+    }
+  }
 
   return (
     <View style={{flex: 1, backgroundColor: '#fff'}}>
@@ -85,7 +69,8 @@ function ConfirmTicket({route, navigation}) {
               <View style={{flexDirection: 'row'}}>
                 <Text style={styles.textTimeDate}>วันที่ : </Text>
                 <Text style={styles.textDefault}>
-                  {item.item.date.substring(0, 8)}{parseInt(item.item.date.substring(8, 10))+1}
+                  {item.item.date.substring(0, 8)}
+                  {parseInt(item.item.date.substring(8, 10)) + 1}
                 </Text>
               </View>
             </Card>
@@ -100,18 +85,26 @@ function ConfirmTicket({route, navigation}) {
               </View>
             </Card>
             <Card>
-            <View style={{flexDirection: 'row'}}>
+              <View style={{flexDirection: 'row'}}>
                 <Text style={styles.textPhone}> ชื่อลูกค้า : </Text>
-                <Text style={{marginRight:35}}></Text>
+                <Text style={{marginRight: 35}}></Text>
                 <Text style={styles.textPhone}>
-                  {item.item.customer_userName} 
+                  {item.item.customer_userName}
                 </Text>
               </View>
               <View style={{flexDirection: 'row'}}>
                 <Text style={styles.textPhone}> เบอร์ติดต่อลูกค้า : </Text>
-                <Text style={{marginLeft:-19}}></Text>
+                <Text style={{marginLeft: -19}}></Text>
                 <Text style={styles.textPhone}>
-                  {item.item.customer_phone_num} 
+                  {item.item.customer_phone_num}
+                </Text>
+              </View>
+            </Card>
+            <Card>
+              <View style={{flexDirection: 'row'}}>
+                <Text style={styles.textPhone}> สถานะของตั๋ว : </Text>
+                <Text style={styles.textPhone}>
+                  {check_status(item.item.status_id)}
                 </Text>
               </View>
             </Card>
@@ -125,27 +118,11 @@ function ConfirmTicket({route, navigation}) {
           </View>
         </ScrollView>
       </View>
-
-      <View style={{flexDirection: 'row', backgroundColor: 'white'}}>
-        <TouchableOpacity onPress={() => alert_check('ยืนยัน', 2)}>
-          <View style={styles.btnฺButtom}>
-            <Text style={styles.textButtom}>ยืนยัน</Text>
-          </View>
-        </TouchableOpacity>
-
-        <View style={{marginLeft: 1}}></View>
-
-        <TouchableOpacity onPress={() => alert_check('ยกเลิก', 3)}>
-          <View style={styles.btnฺButtom}>
-            <Text style={styles.textButtom}>ยกเลิก</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
     </View>
   );
 }
 
-export default ConfirmTicket;
+export default History_ticket;
 
 const styles = StyleSheet.create({
   textBold: {

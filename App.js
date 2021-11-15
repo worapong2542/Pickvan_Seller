@@ -16,11 +16,12 @@ import CardDate from './components/cardDate';
 import {DrawerContent} from './screens/DrawerContent';
 import Login from './screens/login';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import Auto_schedule from './screens/auto_schedule';
 import Auto_schedule_add from './screens/Auto_schedule_add';
 import Auto_schedule_edit from './screens/auto_schedule_edit';
 import Auto_schedule_detail from './screens/auto_schedule_detail';
+import History from './screens/history';
+import History_ticket from './screens/history_ticket';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -334,6 +335,34 @@ function route({navigation}) {
           },
         }}
       />
+
+      <Stack.Screen
+        name="History"
+        component={History}
+        options={{
+          title: 'ประวัติการซื้อ',
+          headerTitleAlign: 'center',
+          headerTintColor: '#5660B3',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 25,
+          },
+        }}
+      />
+
+      <Stack.Screen
+        name="History_ticket"
+        component={History_ticket}
+        options={{
+          title: 'ข้อมูลตั๋ว',
+          headerTitleAlign: 'center',
+          headerTintColor: '#5660B3',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 25,
+          },
+        }}
+      />
     </Stack.Navigator>
   );
 }
@@ -416,7 +445,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     borderRadius: 10,
   },
-  
+
   button: {
     alignItems: 'center',
     backgroundColor: '#DDDDDD',
@@ -425,5 +454,4 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     borderRadius: 10,
   },
- 
 });

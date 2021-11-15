@@ -41,6 +41,13 @@ export function DrawerContent({props, navigation}) {
           />
         </View>
 
+        <View style={styles.drawerMenu}>
+          <DrawerItem
+            label="ประวัติการซื้อทั้งหมด"
+            onPress={() => navigation.navigate('History')}
+          />
+        </View>
+
       </DrawerContentScrollView>
 
       <Drawer.Section style={styles.bottomDrawerSection}>
