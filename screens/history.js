@@ -60,7 +60,6 @@ function History({navigation}) {
         <Text style={styles.baseText}>ค้นหาตั๋ว: </Text>
         <TextInput
           style={styles.textInput}
-          keyboardType="numeric"
           placeholder="กรอก ID ของตั๋ว"
           maxLength={10}
           onChangeText={settext_search}

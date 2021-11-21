@@ -75,7 +75,7 @@ function RouteDetail({route, navigation}) {
     } else {
       await axios
         .get(
-          'http://10.0.2.2:3001/seller/walkin_add/' +
+          'http://10.0.2.2:3001/buy/walkin_add/' +
             item.item.id +
             '/' +
             options[selectedValue] +
