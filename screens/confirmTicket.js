@@ -163,7 +163,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 10,
     marginBottom: 10,
-    marginRight: 150,
   },
   textDefault: {
     color: '#5660B3',
