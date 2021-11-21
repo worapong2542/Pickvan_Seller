@@ -12,7 +12,7 @@ function CheckTicket({navigation}) {
   useEffect(() => {
     checkticket();
   }, []);
-  
+
   //loop req api every 5 second
   const [seconds, setSeconds] = useState(0);
   useEffect(() => {
@@ -33,7 +33,7 @@ function CheckTicket({navigation}) {
   useEffect(() => {
     setReviews(data);
   }, [data]);
- 
+
   return (
     <View style={{flex: 1, backgroundColor: '#fff'}}>
       <View style={{flex: 1, justifyContent: 'center'}}>
@@ -44,21 +44,30 @@ function CheckTicket({navigation}) {
               onPress={() =>
                 navigation.navigate('ConfirmTicket', {item: {item}})
               }>
-              <Card >
-              <View style={{flexDirection: 'row'}}>
-                <Text style={styles.textBold}>เลขตั๋ว  :  {item.ticket_id}</Text>
-                <Text style={styles.textDefault}>จำนวน : {item.seat_amount} ที่นั่ง</Text>
-              </View>
-
-              <View style={{flexDirection: 'row'}}>
-                <Text style={styles.textDefault}>{item.name}</Text>
-                <TouchableOpacity onPress={() => navigation.navigate('ConfirmTicket', {item: {item}})}>
-                  <View style={styles.btnButtom}>
-                    <Text style={styles.textButtom}>ตรวจสอบ</Text>
+              <Card>
+                <View style={{flexDirection: 'row'}}>
+                  <View style={{flex: 2}}>
+                    <Text style={styles.textBold}>เลขตั๋ว : {item.ticket_id} </Text>
                   </View>
-                </TouchableOpacity>
+
+                  <View style={{flex: 1}}>
+                    <Text style={styles.textDefault}>
+                    จำนวน : {item.seat_amount} ที่นั่ง
+                    </Text>
+                  </View>
                 </View>
 
+                <View style={{flexDirection: 'row'}}>
+                  <Text style={styles.textDefault}>{item.name}</Text>
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate('ConfirmTicket', {item: {item}})
+                    }>
+                    <View style={styles.btnButtom}>
+                      <Text style={styles.textButtom}>ตรวจสอบ</Text>
+                    </View>
+                  </TouchableOpacity>
+                </View>
               </Card>
             </TouchableOpacity>
           )}
@@ -77,7 +86,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 10,
     marginBottom: 10,
-    marginRight:150
+   
   },
   textDefault: {
     color: '#5660B3',
@@ -85,7 +94,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 10,
   },
- 
+
   btnButtom: {
     backgroundColor: '#FEB5A6',
     borderRadius: 20,
@@ -93,13 +102,12 @@ const styles = StyleSheet.create({
     width: '60%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft:120,  
-    marginTop:5
+    marginLeft: 120,
+    marginTop: 5,
   },
   textButtom: {
     color: 'white',
     fontWeight: 'bold',
     fontSize: 16,
   },
-  
 });

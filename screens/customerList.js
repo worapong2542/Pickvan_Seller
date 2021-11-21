@@ -1,16 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-} from 'react-native';
+import {Text, View, StyleSheet} from 'react-native';
 import Card from '../components/card';
 import axios from 'axios';
 
 function CustomerList({route, navigation}) {
   const [data, setdata] = useState('');
   const {item} = route.params;
-  console.log(item)
+  console.log(item);
   const new_item = item.item.item;
   const [reviews, setReviews] = useState([]);
 
@@ -28,62 +24,67 @@ function CustomerList({route, navigation}) {
       <Card>
         <Text style={styles.textTime}>{new_item.time.substring(0, 5)}</Text>
         <View style={{flexDirection: 'row'}}>
-            <View style={{ flex: 2}}>
-              <Text style={styles.textDefault}>{new_item.destination}</Text>
-            </View>
-            <View style={{ flex: 1, paddingLeft:80}}>
-              <Text style={styles.textDefault}>{new_item.license}</Text>
-            </View>
-        </View>  
+          <View style={{flex: 2}}>
+            <Text style={styles.textDefault}>{new_item.destination}</Text>
+          </View>
+          <View style={{flex: 1}}>
+            <Text style={styles.textDefault}>{new_item.license}</Text>
+          </View>
+        </View>
       </Card>
 
       <Card>
         <Text style={styles.textBold}>walkin </Text>
         <View style={{flexDirection: 'row'}}>
-            <View style={{ flex: 2}}>
-              <Text style={styles.textDefault}>จำนวน : </Text>
-            </View>
-            <View style={{ flex: 1, paddingLeft:80}}>
-              <Text style={styles.textDefault}>{data.walkin}   คน</Text>
-            </View>
+          <View style={{flex: 2}}>
+            <Text style={styles.textDefault}>จำนวน : </Text>
+          </View>
+          <View style={{flex: 1}}>
+            <Text style={styles.textDefault}>{data.walkin} คน</Text>
+          </View>
         </View>
       </Card>
 
       <Card>
         <Text style={styles.textBold}>การซื้อผ่าน app</Text>
         <View style={{flexDirection: 'row'}}>
-            <View style={{ flex: 2}}>
-              <Text style={styles.textDefault}>จำนวน : </Text>
-            </View>
-            <View style={{ flex: 1, paddingLeft:80}}>
-              <Text style={styles.textDefault}>{data.app}   คน</Text>
-            </View>
+          <View style={{flex: 2}}>
+            <Text style={styles.textDefault}>จำนวน : </Text>
+          </View>
+          <View style={{flex: 1}}>
+            <Text style={styles.textDefault}>{data.app} คน</Text>
+          </View>
         </View>
-        
-        <Text style={styles.textDefault}>
-          เลขตั๋ว :   
-          <Text style={styles.textBold}>
-            {data.ticket_id}
-          </Text>
-        </Text>
+
+        <View style={{flexDirection: 'row'}}>
+          <View style={{flex: 2}}>
+            <Text style={styles.textDefault}>เลขตั๋ว : </Text>
+          </View>
+          <View style={{flex: 1}}>
+            <Text style={styles.textBold}>{data.ticket_id}</Text>
+          </View>
+        </View>
       </Card>
+      
       <Card>
         <Text style={styles.textBold}>กำลังรอการยืนยัน</Text>
         <View style={{flexDirection: 'row'}}>
-            <View style={{ flex: 2}}>
-              <Text style={styles.textDefault}>จำนวน : </Text>
-            </View>
-            <View style={{ flex: 1, paddingLeft:80}}>
-              <Text style={styles.textDefault}>{data.waiting_amount}   คน</Text>
-            </View>
+          <View style={{flex: 2}}>
+            <Text style={styles.textDefault}>จำนวน : </Text>
+          </View>
+          <View style={{flex: 1}}>
+            <Text style={styles.textDefault}>{data.waiting_amount} คน</Text>
+          </View>
         </View>
-        
-        <Text style={styles.textDefault}>
-          เลขตั๋ว :   
-          <Text style={styles.textBold}>
-            {data.ticket_id_waiting}
-          </Text>
-        </Text>
+
+        <View style={{flexDirection: 'row'}}>
+          <View style={{flex: 2}}>
+            <Text style={styles.textDefault}>เลขตั๋ว : </Text>
+          </View>
+          <View style={{flex: 1}}>
+            <Text style={styles.textBold}>{data.ticket_id_waiting}</Text>
+          </View>
+        </View>
       </Card>
     </View>
   );
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 18,
     marginBottom: 10,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   textBold: {
     color: '#5660B3',

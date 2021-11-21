@@ -49,13 +49,17 @@ function History_ticket({route, navigation}) {
           <View style={{flex: 1, backgroundColor: '#fff'}}>
             <Card>
               <View style={{flexDirection: 'row'}}>
-                <Text style={styles.textBold}>
-                  เลขตั๋ว : {item.item.ticket_id}
-                </Text>
-                <Text style={styles.textDefault}>
-                  จำนวน : x {item.item.seat_amount}
-                </Text>
-              </View>
+                  <View style={{flex: 2}}>
+                    <Text style={styles.textBold}>เลขตั๋ว : {item.item.ticket_id}</Text>
+                  </View>
+
+                  <View style={{flex: 1}}>
+                    <Text style={styles.textDefault}>
+                    จำนวน : {item.item.seat_amount} ที่นั่ง
+                    </Text>
+                  </View>
+                </View>
+
             </Card>
 
             <Card>
@@ -131,7 +135,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 10,
     marginBottom: 10,
-    marginRight: 150,
   },
   textDefault: {
     color: '#5660B3',

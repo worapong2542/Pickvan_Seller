@@ -80,12 +80,15 @@ function History({navigation}) {
               }>
               <Card>
                 <View style={{flexDirection: 'row'}}>
-                  <Text style={styles.textBold}>
-                    เลขตั๋ว : {item.ticket_id}
-                  </Text>
-                  <Text style={styles.textDefault}>
+                  <View style={{flex: 2}}>
+                    <Text style={styles.textBold}>เลขตั๋ว : {item.ticket_id} </Text>
+                  </View>
+
+                  <View style={{flex: 1}}>
+                    <Text style={styles.textDefault}>
                     จำนวน : {item.seat_amount} ที่นั่ง
-                  </Text>
+                    </Text>
+                  </View>
                 </View>
 
                 <View style={{flexDirection: 'row'}}>
@@ -117,7 +120,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 10,
     marginBottom: 10,
-    marginRight: 150,
   },
   textDefault: {
     color: '#5660B3',
