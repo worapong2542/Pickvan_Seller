@@ -23,7 +23,12 @@ function ConfirmTicket({route, navigation}) {
 
   async function update_stats_ticket(state) {
     await axios
-      .get('http://10.0.2.2:3001/seller/update/' + item.item.ticket_id + '/' + state)
+      .get(
+        'http://10.0.2.2:3001/seller/update/' +
+          item.item.ticket_id +
+          '/' +
+          state,
+      )
       .then(res => alert(res.data));
     navigation.push('CheckTicket');
   }
@@ -64,14 +69,17 @@ function ConfirmTicket({route, navigation}) {
         <ScrollView>
           <View style={{flex: 1, backgroundColor: '#fff'}}>
             <Card>
-              <View style={{flexDirection: 'row'}}>
-                <Text style={styles.textBold}>
-                  เลขตั๋ว : {item.item.ticket_id}
-                </Text>
+            <View style={{flexDirection: 'row'}}>
+              <View style={{flex: 2}}>
+                <Text style={styles.textBold}>เลขตั๋ว : {item.item.ticket_id}</Text>
+              </View>
+
+              <View style={{flex: 1}}>
                 <Text style={styles.textDefault}>
-                  จำนวน : x {item.item.seat_amount}
+                  จำนวน : {item.item.seat_amount} ที่นั่ง
                 </Text>
               </View>
+            </View>
             </Card>
 
             <Card>
@@ -85,7 +93,8 @@ function ConfirmTicket({route, navigation}) {
               <View style={{flexDirection: 'row'}}>
                 <Text style={styles.textTimeDate}>วันที่ : </Text>
                 <Text style={styles.textDefault}>
-                  {item.item.date.substring(0, 8)}{parseInt(item.item.date.substring(8, 10))+1}
+                  {item.item.date.substring(0, 8)}
+                  {parseInt(item.item.date.substring(8, 10)) + 1}
                 </Text>
               </View>
             </Card>
@@ -100,18 +109,18 @@ function ConfirmTicket({route, navigation}) {
               </View>
             </Card>
             <Card>
-            <View style={{flexDirection: 'row'}}>
+              <View style={{flexDirection: 'row'}}>
                 <Text style={styles.textPhone}> ชื่อลูกค้า : </Text>
-                <Text style={{marginRight:35}}></Text>
+                <Text style={{marginRight: 35}}></Text>
                 <Text style={styles.textPhone}>
-                  {item.item.customer_userName} 
+                  {item.item.customer_userName}
                 </Text>
               </View>
               <View style={{flexDirection: 'row'}}>
                 <Text style={styles.textPhone}> เบอร์ติดต่อลูกค้า : </Text>
-                <Text style={{marginLeft:-19}}></Text>
+                <Text style={{marginLeft: -19}}></Text>
                 <Text style={styles.textPhone}>
-                  {item.item.customer_phone_num} 
+                  {item.item.customer_phone_num}
                 </Text>
               </View>
             </Card>
